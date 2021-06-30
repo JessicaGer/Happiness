@@ -1,8 +1,8 @@
 name: "Happiness"
-title: "Projektarbeit"
+title: "Happiness"
 description: |
-  Projektarbeit
-output_dir: "_site"
+  Happiness
+output_dir: "docs"
 navbar:
   right:
     - text: "Home"
