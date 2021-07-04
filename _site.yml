@@ -2,6 +2,7 @@ name: "Happiness"
 title: "Auf der Reise zum Glück"
 description: |
   Wie das Reisen uns näher zum Glück bringt
+theme: happiness.css
 output_dir: "_site"
 navbar:
   logo: 
