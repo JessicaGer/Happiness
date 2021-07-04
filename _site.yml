@@ -1,12 +1,38 @@
 name: "Happiness"
-title: "Happiness"
+title: "Auf der Reise zum Glück"
 description: |
-  Happiness
-output_dir: "docs"
+  Wie das Reisen uns näher zum Glück bringt
+output_dir: "_site"
 navbar:
+  logo: 
+  href: https://happiness.de
   right:
-    - text: "Home"
+    - text: "Happiness"
       href: index.html
-    - text: "About"
+    - text: "Wer wir sind"
       href: about.html
-output: distill::distill_article
+    - text: "Aktuelles"
+      href: aktuelles.html
+      menu:
+        - text: "Veranstaltungen"
+          href: veranstaltungen.html
+        - text: "Hinter den Kulissen"
+          href: behind.html
+    - text: "Erinnerungen"
+      href: visualizations.html
+      menu:
+        - text: "Gallery"
+          href: gallery.html
+        - text: "Throwbacks"
+          href: throwbacks.html
+    - text: "Werde Teil von uns"
+      href: mitgliedschaft.html
+    - icon: fab fa-instagram
+      href: 
+    - icon: fab fa-facebook
+      href: 
+  search: true
+output: 
+  distill::distill_article:
+    toc: true
+

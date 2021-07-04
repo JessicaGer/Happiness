@@ -1,7 +1,7 @@
 ---
-title: "Happiness"
+title: "Auf der Reise zum Glück"
 description: |
-  Welcome to the website. I hope you enjoy it!
+  Wie das Reisen uns näher zum Glück bringt
 site: distill::distill_website
 ---
 
