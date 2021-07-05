@@ -19,27 +19,44 @@ library(colorspace)
 library(ggthemes)
 library(ggforce)
 library(ggplot2)
+library(ggridges)
 ```
 
 ```{r}
+#DATENSÄTZE FILTERN
+
 #Nur Europa
 happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta"))
 
 #Nur Europa & nur 2018
 happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)
 
-#Vergleich Happiness Score nach Ländern (Europa) 
+#Nur Deutschland
+happyscore_DE <- filter(happyscore, name == "Germany")
+
+#Nur Bulgarien
+happyscore_BULG <- filter(happyscore, name == "Bulgaria")
+
+```
+
+```{r}
+#DIAGRAMME
+
+#Balkendiagramm: Vergleich Happiness Score nach Ländern (Europa) 
 ggplot(happyscore_EU_2018, aes(happiness.score, fct_reorder(name, happiness.score))) +
   geom_col()
 
-#Happiness Score Deutschland von 2005-2020
-happyscore_DE <- filter(happyscore, name == "Germany")
-
+#Liniendiagramm: Happiness Score Deutschland von 2005-2020
 ggplot(happyscore_DE) +
   aes(x = year, y = happiness.score) +
   geom_line()
 
-ggplot(happyscore_EU) +
-  aes(x = year, y = happiness.score, color = name) +
-  geom_point()
+#Liniendiagramm: Happiness Score Bulgarien von 2007-2020
+ggplot(happyscore_BULG) +
+  aes(x = year, y = happiness.score) +
+  geom_line()
+
+#Boxplot: Happiness Score Europa
+ggplot(happyscore_EU, aes(happiness.score, fct_reorder(name, happiness.score))) +
+  geom_boxplot()
 ```
