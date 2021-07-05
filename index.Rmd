@@ -8,11 +8,29 @@ site: distill::distill_website
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
-# Learn more about creating websites with Distill at:
-# https://rstudio.github.io/distill/website.html
+#Daten laden
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
 
-# Learn more about publishing to GitHub Pages at:
-# https://rstudio.github.io/distill/publish_website.html#github-pages
-
+#Libraries
+library(tidyverse)
+library(colorspace)
+library(ggthemes)
+library(ggforce)
+library(ggplot2)
 ```
+
+```{r}
+#Nur Europa
+happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta"))
+
+#Nur Europa & nur 2018
+happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)
+
+ggplot(happyscore_EU_2018) +
+  aes(x = happiness.score) +
+  geom_bar()
+```
+
+
+
 
