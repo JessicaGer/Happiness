@@ -1,0 +1,36 @@
+---
+title: "Diagramme_Jessica"
+author: "Jessica Gerlitz"
+date: "5 7 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Daten laden
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+
+#Libraries
+library(tidyverse)
+library(colorspace)
+library(ggthemes)
+library(ggforce)
+library(ggplot2)
+```
+
+```{r}
+#Nur Europa
+happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta"))
+
+sort(happyscore_EU, decreasing = TRUE)
+
+#Nur Europa & nur 2018
+happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)
+
+ggplot(happyscore_EU_2018) +
+  aes(x = reorder(happiness.score), y = name) +
+  geom_col()
+```
