@@ -1,8 +1,5 @@
 ---
 title: "Diagramme_Jessica"
-author: "Jessica Gerlitz"
-date: "5 7 2021"
-output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -20,13 +17,16 @@ library(ggthemes)
 library(ggforce)
 library(ggplot2)
 library(ggridges)
+library(rgdal)
+library(dplyr)
+library(RColorBrewer)
 ```
 
 ```{r}
 #DATENSÄTZE FILTERN
 
 #Nur Europa
-happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta"))
+happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta", "Russia", "Turkey", "Ukraine", "Kazakhstan", "Azerbaijan", "Belarus", "Serbia", "Moldova", "Georgia", "Bosnia And Herzegovina", "Armenia", "Albania", "Latvia", "Montenegro", "Iceland", "Andorra", "Faroe Islands", "Monaco", "Liechtenstein", "San Marino", "Vatican City"))
 
 #Nur Europa & nur 2018
 happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)

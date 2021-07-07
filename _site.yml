@@ -3,9 +3,9 @@ title: "Auf der Reise zum Glueck"
 description: |
   Wie das Reisen uns näher zum Glueck bringt
 theme: happiness.css
+exclude: ["datasets", "docs"]
 output_dir: "_site"
 navbar:
-  logo: 
   href: https://happiness.de
   right:
     - text: "Happiness"
