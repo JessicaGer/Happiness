@@ -5,24 +5,62 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(ggforce)
+library(dplyr)
+library(ggridges)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r cars}
-summary(cars)
+reisenhappiness <- readr::read_csv('C:/Users/pc/Dropbox/Mein PC (DESKTOP-M4FJMRL)/Desktop/Happiness/datasets/happiness + reisen.csv')
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+```{r}
+# Data cleaning 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+## Top 3 
+reisenhappinesstop3 <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich**"))
+
+## Deutschland
+reisenhappinessde <- filter(reisenhappiness, Land == "Deutschland")
+
+## Top 3 und letzte 3
+reisenhappinesstopundflop <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich**", "Zypern", "Luxemburg", "Malta"))
+
+## Letzte drei 
+reisenhappinessflop <-filter(reisenhappiness, Land %in% c("Zypern", "Luxemburg", "Malta"))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+#Alle im Vergleich Lollipop
+ggplot(reisenhappiness, aes(x = Land, y = Reisende, color = whr, fill = whr))+
+  geom_segment( aes(x = Land, xend= Land, y=0, yend= Reisende)) +
+  geom_point( size=5, color="red", fill=alpha("orange", 0.3), alpha=0.7, shape=21, stroke=2)
+```
+```{r}
+#Top 3 
+ggplot(reisenhappinesstop3, aes(x = Land, y = Reisende, color = whr, fill = whr))+
+  geom_col()
+
+```
+
+```{r}
+#Letzten 3
+ggplot(reisenhappinessflop, aes(x = fct_relevel(Land, "Zypern", "Luxemburg", "Malta"), y = Reisende, color = whr, fill = whr))+
+  geom_col()
+```
+
+```{r}
+#Top 3 und letzten 3 im Vergleich 
+ggplot(reisenhappinesstopundflop, aes(x = fct_relevel(Land, "Deutschland", "Frankreich", "Vereinigtes Königreich**", "Zypern", "Luxemburg", "Malta"), y = Reisende, color = whr, fill = whr))+
+  geom_col()
+```
+
