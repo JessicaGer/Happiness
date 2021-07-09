@@ -26,13 +26,13 @@ reisenhappiness <- readr::read_csv('C:/Users/pc/Dropbox/Mein PC (DESKTOP-M4FJMRL
 # Data cleaning 
 
 ## Top 3 
-reisenhappinesstop3 <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich**"))
+reisenhappinesstop3 <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich"))
 
 ## Deutschland
 reisenhappinessde <- filter(reisenhappiness, Land == "Deutschland")
 
 ## Top 3 und letzte 3
-reisenhappinesstopundflop <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich**", "Zypern", "Luxemburg", "Malta"))
+reisenhappinesstopundflop <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich", "Zypern", "Luxemburg", "Malta"))
 
 ## Letzte drei 
 reisenhappinessflop <-filter(reisenhappiness, Land %in% c("Zypern", "Luxemburg", "Malta"))
