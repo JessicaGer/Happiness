@@ -8,4 +8,41 @@ site: distill::distill_website
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
+library(sf)
+library(tidyverse)
+library(ggiraph)
+
 ```
+
+```{r message=FALSE, warning=FALSE}
+#Map laden
+#https://tapiquen-sig.jimdofree.com/english-version/free-downloads/europe/
+map_europe <- sf::read_sf("shapefiles")
+map_europe
+
+#Happiness Score Datensatz laden
+happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta", "Russia", "Turkey", "Ukraine", "Kazakhstan", "Azerbaijan", "Belarus", "Serbia", "Moldova", "Georgia", "Bosnia And Herzegovina", "Armenia", "Albania", "Latvia", "Montenegro", "Iceland", "Andorra", "Faroe Islands", "Monaco", "Liechtenstein", "San Marino", "Vatican City"))
+
+  #Nur Europa & nur 2018
+  happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)
+
+```
+
+```{r}
+
+#map_europe %>% ggplot() +
+  #aes(fill = happiness.score) +
+  #geom_sf() +
+  #theme_void()
+
+map_europe %>%
+  left_join(happyscore_EU_2018, by = c("NAME" = "name")) %>% ggplot() +
+  aes(fill = happiness.score) +
+  geom_sf_interactive(aes(tooltip = NAME)) +
+  theme_void() -> happiness_map
+
+ggiraph::girafe(
+  ggobj = happiness_map, pointsize = 12, width_svg = 6, height_svg = 6*0.618)
+
+```
+
