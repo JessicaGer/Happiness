@@ -1,6 +1,5 @@
 ---
 title: "Diagramme_Elena"
-output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +17,6 @@ library(ggridges)
 
 ```{r cars}
 reisenhappiness <- read.csv2("./datasets/happiness + reisen.csv")
-
 
 ```
 
@@ -61,7 +59,7 @@ ggplot(reisenhappinessflop, aes(x = fct_relevel(Land, "Zypern", "Luxemburg", "Ma
 
 ```{r}
 #Top 3 und letzten 3 im Vergleich 
-ggplot(reisenhappinesstopundflop, aes(x = fct_relevel(Land, "Deutschland", "Frankreich", "Vereinigtes Königreich**", "Zypern", "Luxemburg", "Malta"), y = Reisende, color = whr, fill = whr))+
+ggplot(reisenhappinesstopundflop, aes(x = fct_relevel(Land, "Deutschland", "Frankreich", "Vereinigtes Königreich", "Zypern", "Luxemburg", "Malta"), y = Reisende, color = whr, fill = whr))+
   geom_col()
 ```
 
