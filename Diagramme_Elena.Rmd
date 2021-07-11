@@ -17,7 +17,8 @@ library(ggridges)
 
 
 ```{r cars}
-reisenhappiness <- readr::read_csv('C:/Users/pc/Dropbox/Mein PC (DESKTOP-M4FJMRL)/Desktop/Happiness/datasets/happiness + reisen.csv')
+reisenhappiness <- read.csv2("./datasets/happiness + reisen.csv")
+
 
 ```
 
