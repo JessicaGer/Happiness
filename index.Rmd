@@ -14,11 +14,10 @@ library(ggiraph)
 
 ```
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
 #Map laden
 #https://tapiquen-sig.jimdofree.com/english-version/free-downloads/europe/
 map_europe <- sf::read_sf("shapefiles")
-map_europe
 
 happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
 
@@ -30,15 +29,13 @@ happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Ki
 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
 
 #map_europe %>% ggplot() +
   #aes(fill = happiness.score) +
   #geom_sf() +
   #theme_void()
 
-add_tooltip(function(img){'<img src="pic_mountain.jpg" alt="Mountain View" style="width:100px;height:100px;">'}, "hover") %>%
-  
 map_europe %>%
   left_join(happyscore_EU_2018, by = c("NAME" = "name")) %>% ggplot() +
   aes(fill = happiness.score) +
