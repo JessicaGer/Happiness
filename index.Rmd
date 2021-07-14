@@ -20,6 +20,8 @@ library(ggiraph)
 map_europe <- sf::read_sf("shapefiles")
 map_europe
 
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+
 #Happiness Score Datensatz laden
 happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta", "Russia", "Turkey", "Ukraine", "Kazakhstan", "Azerbaijan", "Belarus", "Serbia", "Moldova", "Georgia", "Bosnia And Herzegovina", "Armenia", "Albania", "Latvia", "Montenegro", "Iceland", "Andorra", "Faroe Islands", "Monaco", "Liechtenstein", "San Marino", "Vatican City"))
 
@@ -35,10 +37,13 @@ happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Ki
   #geom_sf() +
   #theme_void()
 
+add_tooltip(function(img){'<img src="pic_mountain.jpg" alt="Mountain View" style="width:100px;height:100px;">'}, "hover") %>%
+  
 map_europe %>%
   left_join(happyscore_EU_2018, by = c("NAME" = "name")) %>% ggplot() +
   aes(fill = happiness.score) +
   geom_sf_interactive(aes(tooltip = NAME)) +
+  scale_fill_viridis_c() +
   theme_void() -> happiness_map
 
 ggiraph::girafe(
