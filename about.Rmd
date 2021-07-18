@@ -1,0 +1,11 @@
+---
+title: "Wer wir sind"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Wir sind Jessica, Jiani und Elena. Studieren Digitale Medienkommunikation und haben diese Website für das Seminar Informationsvisualisierungen im Sommersemester 2021 erstellt. 
+
