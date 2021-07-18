@@ -10,24 +10,21 @@ navbar:
   right:
     - text: "Happiness"
       href: index.html
-    - text: "Wer wir sind"
-      href: about.html
-    - text: "Aktuelles"
+    - text: "Glückliche Länder"
       href: aktuelles.html
       menu:
-        - text: "Veranstaltungen"
-          href: veranstaltungen.html
-        - text: "Hinter den Kulissen"
-          href: behind.html
-    - text: "Erinnerungen"
-      href: visualizations.html
-      menu:
-        - text: "Gallery"
-          href: gallery.html
-        - text: "Throwbacks"
-          href: throwbacks.html
-    - text: "Werde Teil von uns"
-      href: mitgliedschaft.html
+        - text: "Deutschland"
+          href: deutschland.html
+        - text: "Finnland"
+          href: finnland.html
+        - text: "Dänemark"
+          href: dänemark.html
+        - text: "Schweiz"
+          href: schweiz.html
+    - text: "Happiness Tipps"
+      href: happiness.html
+    - text: "Wer wir sind"
+      href: about.html
     - icon: fab fa-instagram
       href: 
     - icon: fab fa-facebook
