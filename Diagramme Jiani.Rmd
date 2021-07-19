@@ -1,0 +1,70 @@
+---
+title: “Anzahl der Urlaubsreisen der Deutschen bis 2020” 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(hrbrthemes)
+
+
+# Anzahl der Urlaubsreisen der Deutschen in den Jahren 2005 bis 2020 (In Million)
+graphik <- 
+  ggplot(anzahlurlaubsreisen, aes(x = Jahr, y = Anzahl, fill = Jahr)) + 
+  geom_bar(stat = "identity", width = 0.7 ) + 
+  geom_text(aes(label = Anzahl), size = 3, vjust = -0.5) + 
+  labs(title = "Anzahl der Urlaubsreisen der Deutschen in den Jahren 2005 bis 2020  (in Million)", 
+       subtitle = "Reisen mit einer Dauer von 5 Tagen oder länger ",
+       caption = "Quelle: Statistia")
+graphik
+
+# Durchschnittliche Anzahl der Reisetage der Deutschen in den Jahren 2014 bis 2019 (in Milliarden)
+
+hh2 <- data.frame(Jahr = c("2014","2015","2016","2017","2018","2019"), 
+                  Reisetage = c(1.60, 1.67, 1.67, 1.68, 1.71, 1.70))
+graphik2 <-
+  ggplot(hh2,aes(x=Jahr,y= Reisetage, fill=Jahr))+
+  geom_bar(stat = "identity",width = 0.7)+
+  geom_text(aes(label= Reisetage),size=3,vjust=-0.5) +
+  labs(title = "Durchschnittliche Anzahl der Reisetage der Deutschen",
+       subtitle = "In den Jahren 2014 bis 2019 (in Milliarden) ",
+       caption = "Quelle: Statistia")
+graphik2
+
+
+# happiness + Reisen
+graphik3 <-
+  ggplot(happiness_reisen, aes(x = ReisenproPerson, y = whr) +
+  geom_line()
+graphik3
+
+# Land und Happiness score
+
+graphik4 <- 
+  ggplot(happiness_reisen, aes(x = Land, y = whr, fill = Land)) +
+  geom_bar(stat = "identity", width = 0.7) +
+  geom_text(aes(label = whr), size =3, vjust = -0.5)
+graphik4
+
+# Durchschnittliche Reiseausgaben der Deutschen pro Person und Reise* von 2000 bis 2020
+
+hh1 <- data.frame(Jahr = c("2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"), 
+                  Ausgaben = c(820,845,868,914,906,958,954,983,1054,1017,1033,892))
+graphik5 <-
+  ggplot(hh1,aes(x=Jahr,y= Ausgaben, fill=Jahr))+
+  geom_bar(stat = "identity",width = 0.7)+
+  geom_text(aes(label= Ausgaben),size=3,vjust=-0.5) +
+  labs(title = "Durchschnittliche Reiseausgaben der Deutschen pro Person und Reise",
+       subtitle = "Von 2009 bis 2020 (in Euro)",
+       caption = "Quelle: Statistia")
+graphik5
+```
+
+
+```{r setup, include=FALSE}
+
+ 
+```
+
