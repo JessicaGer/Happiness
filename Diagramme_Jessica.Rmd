@@ -44,7 +44,7 @@ happyscore_BULG <- filter(happyscore, name == "Bulgaria")
 
 #Balkendiagramm: Vergleich Happiness Score nach Ländern (Europa) 
 ggplot(happyscore_EU_2018, aes(happiness.score, fct_reorder(name, happiness.score))) +
-  geom_col()
+  geom_col(size = 200)
 
 #Liniendiagramm: Happiness Score Deutschland von 2005-2020
 ggplot(happyscore_DE) +

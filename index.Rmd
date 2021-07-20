@@ -1,7 +1,7 @@
 ---
 title: "Auf der Reise zum Glück"
 description: |
-  Wie das Reisen uns näher zum Glück bringt
+  Macht Reisen glücklich?
 site: distill::distill_website
 ---
 
@@ -41,10 +41,13 @@ map_europe %>%
   aes(fill = happiness.score) +
   geom_sf_interactive(aes(tooltip = NAME)) +
   scale_fill_viridis_c() +
-  theme_void() -> happiness_map
+  theme_void() +
+  labs (x = "happiness score (in %)",
+        title = "Happiness Score", 
+        subtitle = "Map of Europe") -> happiness_map
 
 ggiraph::girafe(
-  ggobj = happiness_map, pointsize = 12, width_svg = 6, height_svg = 6*0.618)
+  ggobj = happiness_map, pointsize = 12, width_svg = 6, height_svg = 10*0.618)
 
 ```
 

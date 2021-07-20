@@ -9,15 +9,19 @@ library(tidyverse)
 library(ggplot2)
 library(hrbrthemes)
 
+anzahlurlaubsreisen <- read.csv2("./datasets/anzahl-der-urlaubsreisen-der-deutschen-bis-2020.csv")
+
+happiness_reisen <- read.csv2("./datasets/happiness + reisen.csv")
+
 
 # Anzahl der Urlaubsreisen der Deutschen in den Jahren 2005 bis 2020 (In Million)
 graphik <- 
-  ggplot(anzahlurlaubsreisen, aes(x = Jahr, y = Anzahl, fill = Jahr)) + 
+  ggplot(anzahlurlaubsreisen, aes(x = Jahr, y = ReisenDE, fill = Jahr)) + 
   geom_bar(stat = "identity", width = 0.7 ) + 
-  geom_text(aes(label = Anzahl), size = 3, vjust = -0.5) + 
+  geom_text(aes(label = ReisenDE), size = 3, vjust = -0.5) + 
   labs(title = "Anzahl der Urlaubsreisen der Deutschen in den Jahren 2005 bis 2020  (in Million)", 
        subtitle = "Reisen mit einer Dauer von 5 Tagen oder länger ",
-       caption = "Quelle: Statistia")
+       caption = "Quelle: Statista")
 graphik
 
 # Durchschnittliche Anzahl der Reisetage der Deutschen in den Jahren 2014 bis 2019 (in Milliarden)
@@ -33,12 +37,6 @@ graphik2 <-
        caption = "Quelle: Statistia")
 graphik2
 
-
-# happiness + Reisen
-graphik3 <-
-  ggplot(happiness_reisen, aes(x = ReisenproPerson, y = whr) +
-  geom_line()
-graphik3
 
 # Land und Happiness score
 
@@ -61,10 +59,3 @@ graphik5 <-
        caption = "Quelle: Statistia")
 graphik5
 ```
-
-
-```{r setup, include=FALSE}
-
- 
-```
-

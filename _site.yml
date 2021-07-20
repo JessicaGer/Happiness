@@ -10,20 +10,29 @@ navbar:
   right:
     - text: "Happiness"
       href: index.html
-    - text: "Glückliche Länder"
+    - text: "Top 3"
       href: aktuelles.html
       menu:
-        - text: "Deutschland"
-          href: deutschland.html
         - text: "Finnland"
-          href: finnland.html
-        - text: "Dänemark"
-          href: dänemark.html
+          href: 
+        - text: "Daenemark"
+          href: 
         - text: "Schweiz"
-          href: schweiz.html
-    - text: "Happiness Tipps"
-      href: happiness.html
-    - text: "Wer wir sind"
+          href: 
+    - text: "Flop 3"
+      href: aktuelles.html
+      menu:
+        - text: "Griechenland"
+          href: 
+        - text: "Kroatien"
+          href: 
+        - text: "Bulgarien"
+          href: 
+    - text: "Deutschland"
+      href: 
+    - text: "Tipps"
+      href: 
+    - text: "Ueber uns"
       href: about.html
     - icon: fab fa-instagram
       href: 
@@ -33,4 +42,3 @@ navbar:
 output: 
   distill::distill_article:
     toc: true
-

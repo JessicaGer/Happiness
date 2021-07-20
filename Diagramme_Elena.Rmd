@@ -25,16 +25,16 @@ reisenhappiness <- read.csv2("./datasets/happiness + reisen.csv")
 # Data cleaning 
 
 ## Top 3 
-reisenhappinesstop3 <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich"))
+reisenhappinesstop3 <- filter(reisenhappiness, Land %in% c("Finnland", "Dänemark", "Schweiz"))
 
 ## Deutschland
 reisenhappinessde <- filter(reisenhappiness, Land == "Deutschland")
 
 ## Top 3 und letzte 3
-reisenhappinesstopundflop <- filter(reisenhappiness, Land %in% c("Deutschland", "Frankreich", "Vereinigtes Königreich", "Zypern", "Luxemburg", "Malta"))
+reisenhappinesstopundflop <- filter(reisenhappiness, Land %in% c("Finnland", "Dänemark", "Schweiz", "Griechenland", "Kroatien", "Bulgarien"))
 
 ## Letzte drei 
-reisenhappinessflop <-filter(reisenhappiness, Land %in% c("Zypern", "Luxemburg", "Malta"))
+reisenhappinessflop <-filter(reisenhappiness, Land %in% c("Griechenland", "Kroatien", "Bulgarien"))
 ```
 
 
@@ -46,8 +46,22 @@ ggplot(reisenhappiness, aes(x = Land, y = Reisende, color = whr, fill = whr))+
 ```
 ```{r}
 #Top 3 
-ggplot(reisenhappinesstop3, aes(x = Land, y = Reisende, color = whr, fill = whr))+
-  geom_col()
+ggplot(reisenhappinesstop3, aes(x = fct_reorder(Land, reisen.person), y = reisen.person, fill = whr))+
+  geom_col() +
+  scale_fill_viridis_c() +
+  labs (x = "Top 3 der glücklichsten Länder",
+        y = "Anzahl der Reisen p.P. pro Jahr",
+      title = "Anzahl der Reisen der glücklichsten Länder in Europa", 
+      subtitle = "Balkendiagramm")
+
+#Flop 3 
+ggplot(reisenhappinessflop, aes(x = fct_reorder(Land, reisen.person), y = reisen.person, fill = whr))+
+  geom_col() +
+  scale_fill_viridis_c() +
+  labs (x = "Top 3 der unglücklichsten Länder",
+        y = "Anzahl der Reisen p.P. pro Jahr",
+      title = "Anzahl der Reisen der unglücklichsten Länder in Europa", 
+      subtitle = "Balkendiagramm")
 
 ```
 
