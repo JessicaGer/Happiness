@@ -9,6 +9,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r}
 #Daten laden
 happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+happiness_reisen <- read.csv2("./datasets/happiness + reisen.csv")
 
 #Libraries
 library(tidyverse)
@@ -28,6 +29,8 @@ library(RColorBrewer)
 #Nur Europa
 happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta", "Russia", "Turkey", "Ukraine", "Kazakhstan", "Azerbaijan", "Belarus", "Serbia", "Moldova", "Georgia", "Bosnia And Herzegovina", "Armenia", "Albania", "Latvia", "Montenegro", "Iceland", "Andorra", "Faroe Islands", "Monaco", "Liechtenstein", "San Marino", "Vatican City"))
 
+reisenhappiness <- read.csv2("./datasets/happiness + reisen.csv")
+
 #Nur Europa & nur 2018
 happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)
 
@@ -43,9 +46,14 @@ happyscore_BULG <- filter(happyscore, name == "Bulgaria")
 #DIAGRAMME
 
 #Balkendiagramm: Vergleich Happiness Score nach Ländern (Europa) 
-ggplot(happyscore_EU_2018, aes(happiness.score, fct_reorder(name, happiness.score))) +
-  geom_col(size = 200)
-
+ggplot(happiness_reisen, aes(y = fct_reorder(Land, whr), x = whr)) +
+  geom_col(width = 0.5, height = 0.4) +
+  theme_classic(14) +
+  labs (y = "Happiness Score (in %)",
+        x = "Länder",
+        title = "Happiness Score Europa", 
+        subtitle = "Balkendiagramm")
+  
 #Liniendiagramm: Happiness Score Deutschland von 2005-2020
 ggplot(happyscore_DE) +
   aes(x = year, y = happiness.score) +

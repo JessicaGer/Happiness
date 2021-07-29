@@ -63,6 +63,15 @@ ggplot(reisenhappinessflop, aes(x = fct_reorder(Land, reisen.person), y = reisen
       title = "Anzahl der Reisen der unglücklichsten Länder in Europa", 
       subtitle = "Balkendiagramm")
 
+#Top 3 und Flop 3
+ggplot(reisenhappinesstopundflop, aes(x = fct_reorder(Land, reisen.person), y = reisen.person, fill = whr))+
+  geom_col() +
+  scale_fill_viridis_c() +
+  labs (x = "Top 3 & Flop 3 Länder",
+        y = "Anzahl der Reisen p.P. pro Jahr",
+      title = "Anzahl der Reisen der Top 3 & Flop 3 Länder in Europa", 
+      subtitle = "Balkendiagramm")
+
 ```
 
 ```{r}

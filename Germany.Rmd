@@ -1,0 +1,41 @@
+---
+title: "Deutschland"
+header-includes:
+    - \usepackage{sectsty}
+    - \allsectionsfont{\color{green}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+land <- "Deutschland"
+```
+
+$\color{#71CA5B}{Deutschland}$ ist auf Platz ***$\color{#71CA5B}{10}$*** der glücklichsten Länder. Im Durchschnitt reist jeder Deutsche im Jahr ... Mal.
+Hier findest du heraus, ob sich Deutschland für dich als Reiseland eignet. Außerdem 
+
+
+### $\color{#71CA5B}{Bildergalerie}$ ####
+Berlin - Die Hauptstadt von Deutschland
+![Berlin](https://marvel-b1-cdn.bc0a.com/f00000000160678/files.klgates.com/images/office/107764_image_image_142699.png){height="200px" width="200px"}
+![Bayern](https://travellersarchive.de/wp-content/uploads/sites/2/2021/03/schoenste-seen-bayern-slider.jpg){width=100px}
+[Die schönsten Seen in Bayern](https://travellersarchive.de/reisetipps/urlaub-in-deutschland/seen-in-bayern/)
+
+
+
+### Was zeichnet Deutschland aus? ####
+sjdkajlskd
+
+### Wie ist das Klima in Deutschland?
+
+### Wieviel Geld geben Deutsche durchschnittlich für Reisen aus?
+
+### Wieviele Urlaubstage haben Deutsche durchschnittlich im Jahr?
+
+sieh dir... im Vergleich dazu an
+
+### Wieviele Tage verreisen Deutsche im Schnitt?
+
+Buche hier deine Reise und werde glücklicher!! [Booking.com](www.booking.de) 
+
+Oder suche auf der Map weiter nach einem anderen Reiseziel (link map)

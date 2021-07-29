@@ -11,25 +11,23 @@ navbar:
     - text: "Happiness"
       href: index.html
     - text: "Top 3"
-      href: aktuelles.html
+      href: Top3.html
       menu:
         - text: "Finnland"
-          href: 
+          href: Finland.html
         - text: "Daenemark"
-          href: 
+          href: Denmark.html
         - text: "Schweiz"
-          href: 
+          href: Switzerland.html
     - text: "Flop 3"
-      href: aktuelles.html
+      href: Flop3.html
       menu:
         - text: "Griechenland"
-          href: 
+          href: Greece.html
         - text: "Kroatien"
-          href: 
+          href: Croatia.html
         - text: "Bulgarien"
-          href: 
-    - text: "Deutschland"
-      href: 
+          href: Bulgaria.html
     - text: "Tipps"
       href: 
     - text: "Ueber uns"

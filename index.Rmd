@@ -1,7 +1,7 @@
 ---
 title: "Auf der Reise zum Glück"
 description: |
-  Macht Reisen glücklich?
+  Wie das Reisen uns näher zum Glück bringt.
 site: distill::distill_website
 ---
 
@@ -13,6 +13,17 @@ library(tidyverse)
 library(ggiraph)
 
 ```
+
+## Wusstest du, dass...
+wir in Deutschland auf Platz 10 der glücklichsten Länder Europas sind? Das hört sich doch erstmal ganz gut an! Aber denkst du nicht auch, dass wir noch glücklicher sein könnten? Würdest du von dir sagen, dass du mit deinem Leben zufrieden bist? Bist du glücklich?
+
+Diese Seite soll dich zum einen dazu anregen, über dein Leben nachzudenken. Führst du ein zufriedenes Leben? Wärst du gerne glücklicher? Wenn du die letzte Frage mit "Ja" beantwortest, dann bist du genau richtig auf unserer Seite. 
+
+Wir zeigen dir, was du tun kannst, um glücklicher zu sein! Begib dich auf deine eigene Reise zum Glück. 
+
+<center>![](https://i.pinimg.com/736x/c0/3e/f6/c03ef64f8cff915ab6a0756f309e14d2.jpg){height="350px" width="350px"}.</center>
+
+<center>[Studie belegt: Reisen macht glücklich!](https://www.hundredrooms.de/inspiration/kurioses-aus-aller-welt/wissenschaft-bestatigt-6-grunde-warum-das-reisen-glucklich-macht/)</center>
 
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE}
 #Map laden
@@ -29,25 +40,28 @@ happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Ki
 
 ```
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+## Wie glücklich ist Europa?
+Das ist eine interaktive Karte von Europa. 
 
-#map_europe %>% ggplot() +
-  #aes(fill = happiness.score) +
-  #geom_sf() +
-  #theme_void()
+Der sogenannte "Happiness Score" gibt an, ...
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=100, fig.height=120}
 
 map_europe %>%
+  mutate(jscode = glue::glue('window.open("{NAME}.html")')) %>%
   left_join(happyscore_EU_2018, by = c("NAME" = "name")) %>% ggplot() +
   aes(fill = happiness.score) +
-  geom_sf_interactive(aes(tooltip = NAME)) +
+  geom_sf_interactive(aes(tooltip = NAME, 
+                          onclick = jscode)) +
   scale_fill_viridis_c() +
   theme_void() +
-  labs (x = "happiness score (in %)",
-        title = "Happiness Score", 
-        subtitle = "Map of Europe") -> happiness_map
+  labs (title = "Lebenszufriedenheit in Europa 2018 (in %)", 
+        subtitle = "Interaktive Karte von Europa",
+        fill = "World Happiness Index (%)") -> happiness_map
 
 ggiraph::girafe(
-  ggobj = happiness_map, pointsize = 12, width_svg = 6, height_svg = 10*0.618)
+  ggobj = happiness_map, pointsize = 18, width_svg = 10, height_svg = 10*0.618)
+
 
 ```
 
