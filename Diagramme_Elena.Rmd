@@ -31,10 +31,10 @@ reisenhappinesstop3 <- filter(reisenhappiness, Land %in% c("Finnland", "Dänemar
 reisenhappinessde <- filter(reisenhappiness, Land == "Deutschland")
 
 ## Top 3 und letzte 3
-reisenhappinesstopundflop <- filter(reisenhappiness, Land %in% c("Finnland", "Dänemark", "Schweiz", "Griechenland", "Kroatien", "Bulgarien"))
+reisenhappinesstopundflop <- filter(reisenhappiness, Land %in% c("Finnland", "Dänemark", "Schweiz", "Zypern", "Luxemburg", "Malta"))
 
 ## Letzte drei 
-reisenhappinessflop <-filter(reisenhappiness, Land %in% c("Griechenland", "Kroatien", "Bulgarien"))
+reisenhappinessflop <-filter(reisenhappiness, Land %in% c("Malta", "Luxembug", "Zypern"))
 ```
 
 
@@ -45,6 +45,16 @@ ggplot(reisenhappiness, aes(x = Land, y = Reisende, color = whr, fill = whr))+
   geom_point( size=5, color="red", fill=alpha("orange", 0.3), alpha=0.7, shape=21, stroke=2)
 ```
 ```{r}
+#Alle
+ggplot(reisenhappiness, aes(y = reisen.person, x = fct_reorder(Land, reisen.person), fill = whr))+
+  geom_col(width = 0.8, height = 0.4) +
+  scale_fill_viridis_c() +
+  coord_flip() +
+  labs (x = "Anzahl der Reisen p.P. pro Jahr",
+        y = "Land",
+      title = "Anzahl der Reisen der Länder Europas nach Happiness Score", 
+      subtitle = "Balkendiagramm")
+
 #Top 3 
 ggplot(reisenhappinesstop3, aes(x = fct_reorder(Land, reisen.person), y = reisen.person, fill = whr))+
   geom_col() +

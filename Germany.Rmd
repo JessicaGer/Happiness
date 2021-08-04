@@ -1,8 +1,5 @@
 ---
 title: "Deutschland"
-header-includes:
-    - \usepackage{sectsty}
-    - \allsectionsfont{\color{green}}
 ---
 
 ```{r setup, include=FALSE}
@@ -11,8 +8,8 @@ knitr::opts_chunk$set(echo = TRUE)
 land <- "Deutschland"
 ```
 
-$\color{#71CA5B}{Deutschland}$ ist auf Platz ***$\color{#71CA5B}{10}$*** der glücklichsten Länder. Im Durchschnitt reist jeder Deutsche im Jahr ... Mal.
-Hier findest du heraus, ob sich Deutschland für dich als Reiseland eignet. Außerdem 
+$\color{#71CA5B}{Deutschland}$ ist auf Platz ***$\color{#71CA5B}{10}$*** der glücklichsten Länder mit einem Happiness Score von 71,18 %. Im Durchschnitt reist jeder Deutsche im Jahr 3,2 Mal, wobei sich Deutschland auf Platz ***$\color{#71CA5B}{12}$*** der häufigsten Reisen befindet.
+Finde heraus, ob sich Deutschland für dich als Reiseland eignet. Erfahre außerdem mehr darüber, welche weiteren Faktoren einen Einfluss auf das Glücklichsein haben können. 
 
 
 ### $\color{#71CA5B}{Bildergalerie}$ ####
@@ -21,10 +18,8 @@ Berlin - Die Hauptstadt von Deutschland
 ![Bayern](https://travellersarchive.de/wp-content/uploads/sites/2/2021/03/schoenste-seen-bayern-slider.jpg){width=100px}
 [Die schönsten Seen in Bayern](https://travellersarchive.de/reisetipps/urlaub-in-deutschland/seen-in-bayern/)
 
-
-
 ### Was zeichnet Deutschland aus? ####
-sjdkajlskd
+Deutschland ist landschaftlich divers - und genau so vielfältig sind auch die möglichen Urlaubsziele. Von den Alpen, über grüne Wälder, sanfte Mittelgebirge und Flusslandschaften bis hin zur Küstenregion reicht die Auswahl. Reisen in Deutschland lohnt sich also auch!
 
 ### Wie ist das Klima in Deutschland?
 
@@ -36,6 +31,8 @@ sieh dir... im Vergleich dazu an
 
 ### Wieviele Tage verreisen Deutsche im Schnitt?
 
+
+### $\color{#71CA5B}{Werde glücklicher!}$ ####
 Buche hier deine Reise und werde glücklicher!! [Booking.com](www.booking.de) 
 
-Oder suche auf der Map weiter nach einem anderen Reiseziel (link map)
+Oder suche auf der Map weiter nach einem anderen Reiseziel [Zurück zur Europakarte](Happiness.html)

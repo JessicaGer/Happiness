@@ -8,60 +8,15 @@ site: distill::distill_website
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
-library(sf)
-library(tidyverse)
-library(ggiraph)
-
 ```
 
 ## Wusstest du, dass...
-wir in Deutschland auf Platz 10 der glücklichsten Länder Europas sind? Das hört sich doch erstmal ganz gut an! Aber denkst du nicht auch, dass wir noch glücklicher sein könnten? Würdest du von dir sagen, dass du mit deinem Leben zufrieden bist? Bist du glücklich?
+wir in Deutschland auf Platz 10 der glücklichsten Länder Europas sind? Das hört sich doch erstmal ganz gut an! Aber denkst du nicht auch, dass wir noch glücklicher sein könnten? Würdest du sagen, dass du mit deinem Leben zufrieden bist? Bist du glücklich?
 
-Diese Seite soll dich zum einen dazu anregen, über dein Leben nachzudenken. Führst du ein zufriedenes Leben? Wärst du gerne glücklicher? Wenn du die letzte Frage mit "Ja" beantwortest, dann bist du genau richtig auf unserer Seite. 
+Diese Seite soll dich dazu anregen, über dein Leben nachzudenken. Führst du ein zufriedenes Leben? Wärst du gerne glücklicher? Wenn du die letzte Frage mit "Ja" beantwortest, dann bist du genau richtig auf unserer Seite. 
 
 Wir zeigen dir, was du tun kannst, um glücklicher zu sein! Begib dich auf deine eigene Reise zum Glück. 
 
+<center>## $\color{#A8DCEE}{Starte}$ $\color{#A8DCEE}{jetzt}$ $\color{#A8DCEE}{deine}$ $\color{#A8DCEE}{Reise!}$ #### 
 <center>![](https://i.pinimg.com/736x/c0/3e/f6/c03ef64f8cff915ab6a0756f309e14d2.jpg){height="350px" width="350px"}.</center>
-
-<center>[Studie belegt: Reisen macht glücklich!](https://www.hundredrooms.de/inspiration/kurioses-aus-aller-welt/wissenschaft-bestatigt-6-grunde-warum-das-reisen-glucklich-macht/)</center>
-
-```{r message=FALSE, warning=FALSE, paged.print=FALSE}
-#Map laden
-#https://tapiquen-sig.jimdofree.com/english-version/free-downloads/europe/
-map_europe <- sf::read_sf("shapefiles")
-
-happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
-
-#Happiness Score Datensatz laden
-happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta", "Russia", "Turkey", "Ukraine", "Kazakhstan", "Azerbaijan", "Belarus", "Serbia", "Moldova", "Georgia", "Bosnia And Herzegovina", "Armenia", "Albania", "Latvia", "Montenegro", "Iceland", "Andorra", "Faroe Islands", "Monaco", "Liechtenstein", "San Marino", "Vatican City"))
-
-  #Nur Europa & nur 2018
-  happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)
-
-```
-
-## Wie glücklich ist Europa?
-Das ist eine interaktive Karte von Europa. 
-
-Der sogenannte "Happiness Score" gibt an, ...
-
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=100, fig.height=120}
-
-map_europe %>%
-  mutate(jscode = glue::glue('window.open("{NAME}.html")')) %>%
-  left_join(happyscore_EU_2018, by = c("NAME" = "name")) %>% ggplot() +
-  aes(fill = happiness.score) +
-  geom_sf_interactive(aes(tooltip = NAME, 
-                          onclick = jscode)) +
-  scale_fill_viridis_c() +
-  theme_void() +
-  labs (title = "Lebenszufriedenheit in Europa 2018 (in %)", 
-        subtitle = "Interaktive Karte von Europa",
-        fill = "World Happiness Index (%)") -> happiness_map
-
-ggiraph::girafe(
-  ggobj = happiness_map, pointsize = 18, width_svg = 10, height_svg = 10*0.618)
-
-
-```
-
+[$\color{#A8DCEE}{Klicke}$ $\color{#A8DCEE}{hier!}$](Happiness.html)</center>

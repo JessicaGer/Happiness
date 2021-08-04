@@ -5,11 +5,15 @@ description: |
 theme: happiness.css
 exclude: ["datasets", "docs"]
 output_dir: "_site"
+includes:
+      in_header: favicon.html
 navbar:
   href: https://happiness.de
   right:
-    - text: "Happiness"
-      href: index.html
+    - text: "Happiness Score"
+      href: Happiness.html
+    - text: "Reisen macht gluecklich"
+      href: Reisen.html
     - text: "Top 3"
       href: Top3.html
       menu:
@@ -24,10 +28,10 @@ navbar:
       menu:
         - text: "Griechenland"
           href: Greece.html
-        - text: "Kroatien"
-          href: Croatia.html
         - text: "Bulgarien"
           href: Bulgaria.html
+        - text: "Rumaenien"
+          href: Rumaenien.html
     - text: "Tipps"
       href: 
     - text: "Ueber uns"
@@ -35,8 +39,7 @@ navbar:
     - icon: fab fa-instagram
       href: 
     - icon: fab fa-facebook
-      href: 
-  search: true
+      href:
 output: 
   distill::distill_article:
     toc: true
