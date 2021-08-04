@@ -9,3 +9,11 @@ land <- "Bulgarien"
 ```
 
 
+
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+happyscore_DE <- filter(happyscore, name == "Bulgaria")
+
+#Liniendiagramm: Happiness Score Bulgarien von 2007-2020
+ggplot(happyscore_BULG) +
+  aes(x = year, y = happiness.score) +
+  geom_line()

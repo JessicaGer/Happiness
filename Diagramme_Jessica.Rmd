@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r}
 #Daten laden
 happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
-happiness_reisen <- read.csv2("./datasets/happiness + reisen.csv")
+happiness_reisen <- read.csv2("./datasets/happiness_reisen.csv")
 
 #Libraries
 library(tidyverse)
@@ -29,7 +29,7 @@ library(RColorBrewer)
 #Nur Europa
 happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Kingdom", "Spain", "Italy", "Poland", "Sweden", "Netherlands", "Finland", "Czech Republic", "Norway", "Austria", "Switzerland", "Hungary", "Denmark", "Romania", "Portugal", "Belgium", "Ireland", "Slovakia", "Greece", "Estonia", "Croatia", "Slovenia", "Bulgaria", "Lithuania", "Latvia", "Cyprus", "Luxembourg", "Malta", "Russia", "Turkey", "Ukraine", "Kazakhstan", "Azerbaijan", "Belarus", "Serbia", "Moldova", "Georgia", "Bosnia And Herzegovina", "Armenia", "Albania", "Latvia", "Montenegro", "Iceland", "Andorra", "Faroe Islands", "Monaco", "Liechtenstein", "San Marino", "Vatican City"))
 
-reisenhappiness <- read.csv2("./datasets/happiness + reisen.csv")
+reisenhappiness <- read.csv2("./datasets/happiness_reisen.csv")
 
 #Nur Europa & nur 2018
 happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)

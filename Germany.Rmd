@@ -36,3 +36,14 @@ sieh dir... im Vergleich dazu an
 Buche hier deine Reise und werde glücklicher!! [Booking.com](www.booking.de) 
 
 Oder suche auf der Map weiter nach einem anderen Reiseziel [Zurück zur Europakarte](Happiness.html)
+
+
+
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+happyscore_DE <- filter(happyscore, name == "Germany")
+
+
+#Liniendiagramm: Happiness Score Deutschland von 2005-2020
+ggplot(happyscore_DE) +
+  aes(x = year, y = happiness.score) +
+  geom_line()
