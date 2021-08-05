@@ -8,6 +8,10 @@ knitr::opts_chunk$set(echo = FALSE)
 library(sf)
 library(tidyverse)
 library(ggiraph)
+library(gganimate)
+options(gganimate.nframes = 30)
+library(gifski)
+library(gapminder)
 ```
  
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -29,7 +33,7 @@ happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Ki
 ### Wie glücklich ist Europa?
 Der sogenannte "Happiness Score" gibt die Lebenszufriedenheit eines Landes in Prozent an. Unsere interaktive Karte zeigt dir durch farbliche Markierungen an, wie glücklich die Menschen sind. Je höher der Happiness Score, desto glücklicher sind die Menschen. 
 Wenn du mehr über den Happiness Score erfahren möchtest, klicke [$\color{#A8DCEE}{hier!}$](https://worldhappiness.report/archive/)
-Wenn du mit der Maus über die Karte fährst, erfährst du, um welches Land es sich jeweils handelt. Was die Karte noch so kann, das zeigen wir dir gleich. Also bleib gespannt!
+Wenn du mit der Maus über die Karte fährst, erfährst du, um welches Land es sich jeweils handelt. Was die Karte noch so kann, das zeigen wir dir später. Also bleib gespannt!
 
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=100, fig.height=120}
 
@@ -50,42 +54,62 @@ ggiraph::girafe(
 ```
 Unser Lollipop-Diagramm stellt eine andere Art der Visualisierung des Happiness Scores dar. Es soll dir dabei helfen, dich noch näher mit dem Happiness Score auseinander zu setzen. 
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=8, fig.height=8}
-# Lolipop Chart Happiness Score und Land 
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=10, fig.height=8}
+# Lollipop Chart Happiness Score und Land 
 
 ggplot(reisenhappiness, aes(x = fct_reorder(Land, whr), y = whr, color = whr))+ 
-  geom_point( size= 5, alpha = 0.8) +  
+  geom_point(size= 5, alpha = 0.8) +  
   geom_line()+
   geom_segment(aes(x = Land, xend= Land, y=0, yend= whr)) +
   scale_color_viridis_c()+ 
   coord_flip() +
+  ylim(0, 80) +
   theme_light() + 
-    theme(panel.grid.major.y = element_blank(),panel.border = element_blank(), axis.ticks.y = element_blank()) +
-  geom_text(aes(label = whr), size =3, hjust = -0.6, color = "black") +
-  labs(title = "Happiness Score in Europa nach Ländern",
-       subtitle = "Im Jahr 2018 (%) ",
+  theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
+  geom_text(aes(label = whr), size = 3, hjust = -0.5, color = "black") +
+  labs(title = "Happiness Score in Europa nach Ländern 2018",
+       subtitle = "Lollipop-Diagramm",
        caption = "Quelle: Gapminder",
        x = "Land",
-       y = "Happiness Score (%)")
-```
-Hättest du gedacht, dass Finnland das glücklichste Land Europas ist? Wieso sind die Menschen in Finnland glücklicher als wir? Wie du dir bestimmt denken kannst, gibt es viele Faktoren, die dabei eine wichtige Rolle spielen. Wir möchten dir auf unserer Seite einen Grund davon zeigen: $\color{#A8DCEE}{REISEN}$
-
-Eine neue Studie aus dem Jahr 2021 belegt: $\color{#A8DCEE}{Reisen}$ $\color{#A8DCEE}{macht}$ $\color{#A8DCEE}{glücklich!}$ Überzeuge dich selbst davon, indem du dich mit unseren Grafiken zum Einfluss des Reisens auf den Happiness Score beschäftigst. 
-Möchtest du mehr über die Studie erfahren? Dann klicke [$\color{#A8DCEE}{hier!}$](https://www.ingentaconnect.com/content/cog/ta/2021/00000026/00000001/art00006;jsessionid=6i07c83eni86b.x-ic-live-01)
-
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=8, fig.height=8}
-ggplot(happiness_reisen, aes(y= fct_reorder(Land, reisen.person), x= reisen.person, color = whr )) + 
-  geom_point(size= 6, alpha = 0.8)+ 
-  scale_color_viridis_c() + 
-  geom_text(aes(label = reisen.person), size=3, hjust = -0.7, color = "black") + 
-  theme_light() + 
-  labs (x = "Anzahl der Reisen p.P. pro Jahr",
-        y = "Land",
-      title = "Anzahl der Reisen der Länder Europas nach Happiness Score", 
-      subtitle = "Streudiagramm",
-      color = "Happiness 
+       y = "Happiness Score (%)",
+       color = "Happiness 
 Score (%)")
 ```
-Wie du siehst, reisen die Finnen im Durchschnitt am häufigsten.  
+Sieh' dir außerdem an, wie sich der Happiness Score der 3 glücklichsten Länder Europas, der 3 unglücklichsten Länder Europas und Deutschland zwischen 2014 und 2020 verändert hat. 
 
-Deutschland belegt den Platz 12 bei den häufigsten Reisen in Europa
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset"}
+#Bar-Chart-Race
+happyscore %>%  
+    filter(name %in% c("Germany", "Finland", "Denmark", "Switzerland", "Bulgaria", "Greece", "Croatia")) %>% 
+  filter (year %in% c("2014", "2015", "2016", "2017", "2018", "2019", "2020"))%>% 
+  group_by(year) %>%  
+  arrange(year, -happiness.score) %>%
+  mutate(rank = 1:n()) %>% 
+  filter(rank <= 7) ->
+  ranked_by_year
+
+ggplot(ranked_by_year) +
+  aes(x = fct_reorder(name, happiness.score) , y = happiness.score, fill = happiness.score) +
+  geom_col(width = 0.6) +
+  theme_light() + 
+  theme(panel.grid.major.x = element_blank(), axis.ticks.x = element_blank(), panel.border = element_blank()) +
+  scale_fill_viridis_c() + 
+  scale_y_continuous(name = "Happiness Score (%)",limits = c(0,80)) +
+  scale_x_discrete(name = "Land") +
+  gganimate::transition_time(year) +
+  labs (title = "Happiness Score im Jahr: {frame_time}",
+          subtitle = "Bar Chart Race",
+         fill = "Happiness 
+Score (%)") -> anim
+animate(
+  anim,
+  fps = 0.6,
+  nframes = 7,
+  renderer = gifski_renderer(),
+  height = 250, width = 450
+)
+```
+Hättest du gedacht, dass Finnland das glücklichste Land Europas ist? Wieso sind die Menschen in Finnland glücklicher als wir? Wie du dir bestimmt denken kannst, gibt es viele Faktoren, die dabei eine wichtige Rolle spielen. Wir möchten dir auf unserer Seite einen Grund davon zeigen: $\color{#A8DCEE}{REISEN}$ 
+
+Klicke [$\color{#A8DCEE}{hier!}$](Reisen.html), um deinem Glück näher zu kommen!
+
