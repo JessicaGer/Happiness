@@ -29,7 +29,7 @@ ggplot(happ, aes(y = happiness.score, x = year, color = name))+
           y = "Happiness Score (%)",
           color = "Land")
 ```
-Finde jetzt heraus, ob sich Deutschland für dich als Reiseland eignet. Im Durchschnitt reist jeder Deutsche im Jahr 3,2 Mal, wobei sich Deutschland auf Platz ***$\color{#71CA5B}{12}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Deutschland ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas ist.  
+Finde jetzt heraus, ob sich Deutschland für dich als Reiseland eignet. Im Durchschnitt reist jeder Deutsche im Jahr 3,2 Mal, wobei sich Deutschland auf Platz ***$\color{#71CA5B}{12}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Deutschland ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
 
 ### $\color{#71CA5B}{Bildergalerie}$ ####
 Berlin - Die Hauptstadt von Deutschland
