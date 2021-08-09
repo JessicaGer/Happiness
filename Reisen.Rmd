@@ -13,7 +13,7 @@ reisen_top3_flop3 <- filter(happiness_reisen, Land %in% c("Finnland", "Dänemark
 Eine neue Studie aus dem Jahr 2021 belegt: $\color{#A8DCEE}{Reisen}$ $\color{#A8DCEE}{macht}$ $\color{#A8DCEE}{glücklich!}$ Überzeuge dich selbst davon, indem du dich mit unseren Grafiken zum Einfluss des Reisens auf den Happiness Score beschäftigst. 
 Möchtest du mehr über die Studie erfahren? Dann klicke [$\color{#A8DCEE}{hier!}$](https://www.ingentaconnect.com/content/cog/ta/2021/00000026/00000001/art00006;jsessionid=6i07c83eni86b.x-ic-live-01)
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=10, fig.height=8}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=8, fig.align="center"}
 ggplot(happiness_reisen, aes(y= fct_reorder(Land, reisen.person), x= reisen.person, color = whr )) + 
   geom_point(size= 6, alpha = 0.8)+ 
   scale_color_viridis_c() + 
@@ -30,14 +30,14 @@ Score (%)")
 ```
 Wie du siehst, reisen die Finnen im Durchschnitt am häufigsten. Kein Wunder also, dass sie das glücklichste Land Europas sind. Im Vergleich dazu belegt Deutschland Platz 12 der häufigsten Reisen in Europa. Wir können uns also ein Beispiel an Finnland nehmen und glücklicher werden. Selbstverständlich spielen auch noch andere Faktoren eine Rolle, die einen Einfluss auf das Glücklichsein haben können. Mehr dazu erfährst du [$\color{#A8DCEE}{hier!}$](http://universityofhappiness.de/wp-content/uploads/2013/03/Happiness-Research.pdf)
 
-Hier noch ein Vergleich der Länder, die am häufigsten reisen (Top 3) und der Länder, die am wenigsten reisen (Flop 3).
+Hier noch ein direkter Vergleich der Länder, die am häufigsten reisen (Top 3) und der Länder, die am wenigsten reisen (Flop 3).
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=6, fig.height=3, fig.align="center"}
 ggplot(reisen_top3_flop3, aes(x= fct_reorder(Land,reisen.person), y= reisen.person, color = whr )) + 
-  geom_point(size= 7, alpha = 0.6)+ 
+  geom_point(size= 4, alpha = 0.6)+ 
   scale_color_viridis_c() + 
   ylim(0, 8) +
-  geom_text(aes(label = reisen.person), size=3, hjust = -0.5, color = "black") + 
+  geom_text(aes(label = reisen.person), size=3, hjust = -0.3, color = "black") + 
   theme_light() + 
   theme(panel.border = element_blank()) +
   labs(title = " Anzahl der Reisen pro Person der Top 3 & Flop 3 Länder",
@@ -45,12 +45,11 @@ ggplot(reisen_top3_flop3, aes(x= fct_reorder(Land,reisen.person), y= reisen.pers
        caption = "Quelle: Gapminder",
        x = "Land",
        y = "Durchschnittliche Anzahl der Reisen p.P.
-       pro Jahr")
+       pro Jahr",
+       color = "Happiness 
+Score (%)")
 ```
 
-Jetzt weißt du, dass Reisen glücklich machen kann. Also worauf wartest du noch? Suche dir ein Reiseziel auf unserer interaktiven Map aus. Mehr Informationen und interessante Grafiken findest du, wenn du auf das jeweilige Land klickst. 
+Jetzt weißt du, dass Reisen glücklich machen kann. Also worauf wartest du noch? Suche dir ein Reiseziel auf unserer interaktiven Map aus. Mehr Informationen und interessante Grafiken findest du, wenn du auf das jeweilige Land klickst. Hier geht's zur [$\color{#A8DCEE}{Map}$](happiness.html). Du kannst aber auch nach oben scrollen und dir direkt die Top 3 Länder, die am häufigsten reisen und die Flop 3 Länder, die am seltensten reisen, genauer ansehen.
 
-Hinweis: Da die Seite sich noch in Bearbeitung befindet, kannst du aktuell nur auf die Seiten der Top 3 und Flop 3 Länder sowie auf die Seite von Deutschland gelangen.  
-
-
-
+Hinweis: Da die Seite sich noch in Bearbeitung befindet, kannst du aktuell nur auf die Seiten der Top 3 und Flop 3 Länder sowie auf die Seite von Deutschland gelangen.

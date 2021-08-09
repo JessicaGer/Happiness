@@ -3,47 +3,110 @@ title: "Deutschland"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
-land <- "Deutschland"
+library(ggplot2)
+library(tidyverse)
+
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+klima_DE1 <- read.csv2("./datasets/klima/klima_DE1.csv")
+klima_DE2 <- read.csv2("./datasets/klima/klima_DE2.csv")
+tourismus <- read.csv2("./datasets/tourismus.csv")
 ```
 
-$\color{#71CA5B}{Deutschland}$ ist auf Platz ***$\color{#71CA5B}{10}$*** der glücklichsten Länder mit einem Happiness Score von 71,18 %. Im Durchschnitt reist jeder Deutsche im Jahr 3,2 Mal, wobei sich Deutschland auf Platz ***$\color{#71CA5B}{12}$*** der häufigsten Reisen befindet.
-Finde heraus, ob sich Deutschland für dich als Reiseland eignet. Erfahre außerdem mehr darüber, welche weiteren Faktoren einen Einfluss auf das Glücklichsein haben können. 
+$\color{#71CA5B}{Deutschland}$ ist auf Platz ***$\color{#71CA5B}{10}$*** der glücklichsten Länder mit einem Happiness Score von 71,18 %. In der folgenden Grafik siehst du, wie sich der Happiness Score in den letzten Jahren verändert hat.
 
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.align="center"}
+happ <- filter(happyscore, name %in% c("Germany"))
+ggplot(happ, aes(y = happiness.score, x = year, color = name))+
+   geom_line() +
+   theme_light() +
+   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
+   scale_color_manual(values=c('#71CA5B'))+
+      labs (title = "Happiness Score zwischen 2005 und 2020",
+          subtitle = "Liniendiagramm",
+          x= "Jahr",
+          y = "Happiness Score (%)",
+          color = "Land")
+```
+Finde jetzt heraus, ob sich Deutschland für dich als Reiseland eignet. Im Durchschnitt reist jeder Deutsche im Jahr 3,2 Mal, wobei sich Deutschland auf Platz ***$\color{#71CA5B}{12}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Deutschland ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas ist.  
 
 ### $\color{#71CA5B}{Bildergalerie}$ ####
 Berlin - Die Hauptstadt von Deutschland
-![Berlin](https://marvel-b1-cdn.bc0a.com/f00000000160678/files.klgates.com/images/office/107764_image_image_142699.png){height="200px" width="200px"}
-![Bayern](https://travellersarchive.de/wp-content/uploads/sites/2/2021/03/schoenste-seen-bayern-slider.jpg){width=100px}
-[Die schönsten Seen in Bayern](https://travellersarchive.de/reisetipps/urlaub-in-deutschland/seen-in-bayern/)
+<center>![Berlin](https://static.wixstatic.com/media/dae877_cac3c7f145ea484e95fb4a66e7efdcf8~mv2.jpg/v1/fill/w_640,h_516,al_c,q_80,usm_0.66_1.00_0.01/dae877_cac3c7f145ea484e95fb4a66e7efdcf8~mv2.webp){height="400px" width="200px"}</center>
 
 ### Was zeichnet Deutschland aus? ####
 Deutschland ist landschaftlich divers - und genau so vielfältig sind auch die möglichen Urlaubsziele. Von den Alpen, über grüne Wälder, sanfte Mittelgebirge und Flusslandschaften bis hin zur Küstenregion reicht die Auswahl. Reisen in Deutschland lohnt sich also auch!
 
-### Wie ist das Klima in Deutschland?
+### Wie ist das Klima in Deutschland? ####
 
-### Wieviel Geld geben Deutsche durchschnittlich für Reisen aus?
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Klima Deutschland Berlin(Temperatur und Sonnenstunden)
 
-### Wieviele Urlaubstage haben Deutsche durchschnittlich im Jahr?
+klima_DE1$Monat <- factor(klima_DE1$Monat, levels =klima_DE1$Monat)
+df1 <- klima_DE1 %>% select(-Sonnenstd) %>% gather(key=Temperature, value=value, -Monat)
+ggplot() + geom_line(data=df1, aes(x=Monat, y=value, color=Temperature, group=Temperature)) +
+   scale_color_brewer(palette="Dark2")+
+  geom_bar(klima_DE1, mapping = aes(x=Monat, y=Sonnenstd), stat="identity", alpha=0.5, fill = "orange") +
+  scale_y_continuous(
+    name = "Temperature(°C)",
+    sec.axis = sec_axis( trans=~.*1, name="Durchschnittliche tägliche Sonnenstunde (Std.)")
+  ) +
+  theme_light() + 
+  labs(title = "Durchschnittliche tägliche Temperatur und Sonnenstunden in Berlin",
+       caption = "Quelle:Climate-Data.Org" ) +
+  theme(
+      axis.title.y = element_text(color ="black"),
+      axis.title.y.right = element_text(color ="orange")) +  
+  theme(legend.position = "bottom")
+```
 
-sieh dir... im Vergleich dazu an
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Regentage und Niederschlag in Berlin 
+klima_DE2$Monat <- fct_inorder(klima_DE2$Monat)
+klima_DE2 %>% 
+  gather(Niederschlag,Regentage, key = "var", value = "value") %>%
+  ggplot(aes(x = Monat, y = value, col = var)) + 
+ geom_point(size = 4, alpha = 0.6) +  
+  scale_y_continuous(
+    name = "Niederschlag(mm)",
+    sec.axis = sec_axis( trans=~.*1, name="Regentage (Tg.)")) +
+  scale_color_discrete(labels = c("Niederschlag", "Regentage")) +
+  labs(title = "Niederschlag und Regentage pro Monat in Berlin", 
+       caption ="Quelle:Climate-Data.Org",
+       x = "Monat") + 
+  geom_text(aes(label = value), size = 3, vjust = -0.7, color = "black") +
+  theme_light() +   
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        plot.title = element_text(hjust = 0.5))
+```
 
-### Wieviele Tage verreisen Deutsche im Schnitt?
+### Wie hoch sind die Reiseausgaben für Übernachtungen in Deutschland im Vergleich zu anderen Ländern Europas? ####
 
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
 
-### $\color{#71CA5B}{Werde glücklicher!}$ ####
+tourismus_col <- tourismus %>% 
+mutate(mycolor = ifelse(Land == "Deutschland","#71CA5B","#00000"))
+
+ggplot(tourismus_col, aes(x = fct_reorder(Land, expenditure), y = expenditure))+ 
+  geom_point(size= 4, alpha = 0.8) +  
+  geom_line()+
+  geom_segment(aes(x = Land, xend= Land, y=0, yend= expenditure, color=mycolor)) +
+  coord_flip() +
+  theme_light() +
+  theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank(), legend.position = "none") +
+  geom_text(aes(label = expenditure), size = 3, hjust = -1.2, color = "black")+
+  scale_y_continuous(breaks = c(0,30, 60, 90, 120)) +
+  labs(title = "Durchschnittliche Reiseausgaben pro Übernachtung in den Ländern Europas",
+       subtitle = "Lollipop-Diagramm",
+       caption = "Quelle: ...",
+       x = "Land",
+       y = "Reiseausgaben pro Übernachtung (€)")
+
+```
+
+### $\color{#71CA5B}{Werde}$ $\color{#71CA5B}{glücklicher!}$ ####
 Buche hier deine Reise und werde glücklicher!! [Booking.com](www.booking.de) 
 
 Oder suche auf der Map weiter nach einem anderen Reiseziel [Zurück zur Europakarte](Happiness.html)
-
-
-
-happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
-happyscore_DE <- filter(happyscore, name == "Germany")
-
-
-#Liniendiagramm: Happiness Score Deutschland von 2005-2020
-ggplot(happyscore_DE) +
-  aes(x = year, y = happiness.score) +
-  geom_line()

@@ -11,6 +11,7 @@ library(ggiraph)
 library(gganimate)
 options(gganimate.nframes = 30)
 library(gifski)
+library(ggridges)
 library(gapminder)
 ```
  
@@ -28,14 +29,13 @@ happyscore_EU <- filter(happyscore, name %in% c("Germany", "France",  "United Ki
 
   #Nur Europa & nur 2018
   happyscore_EU_2018 <- filter(happyscore_EU, year == 2018)
-
 ```
 ### Wie glücklich ist Europa?
-Der sogenannte "Happiness Score" gibt die Lebenszufriedenheit eines Landes in Prozent an. Unsere interaktive Karte zeigt dir durch farbliche Markierungen an, wie glücklich die Menschen sind. Je höher der Happiness Score, desto glücklicher sind die Menschen. 
+Der sogenannte "Happiness Score" gibt die Lebenszufriedenheit eines Landes in Prozent an und wird jährlich vom Sustainable Development Solutions Network der Vereinten Nationen in einem Report veröffentlicht. Unsere interaktive Karte zeigt dir durch farbliche Markierungen an, wie glücklich die Menschen sind. Je höher der Happiness Score, desto glücklicher sind die Menschen. 
 Wenn du mehr über den Happiness Score erfahren möchtest, klicke [$\color{#A8DCEE}{hier!}$](https://worldhappiness.report/archive/)
 Wenn du mit der Maus über die Karte fährst, erfährst du, um welches Land es sich jeweils handelt. Was die Karte noch so kann, das zeigen wir dir später. Also bleib gespannt!
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=100, fig.height=120}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=100, fig.height=120, fig.align="center"}
 
 map_europe %>%
   mutate(jscode = glue::glue('window.open("{NAME}.html")')) %>%
@@ -54,19 +54,19 @@ ggiraph::girafe(
 ```
 Unser Lollipop-Diagramm stellt eine andere Art der Visualisierung des Happiness Scores dar. Es soll dir dabei helfen, dich noch näher mit dem Happiness Score auseinander zu setzen. 
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset", fig.width=10, fig.height=8}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=8, fig.align="center"}
 # Lollipop Chart Happiness Score und Land 
 
-ggplot(reisenhappiness, aes(x = fct_reorder(Land, whr), y = whr, color = whr))+ 
+ggplot(happyscore_EU_2018, aes(x = fct_reorder(name, happiness.score), y = happiness.score, color = happiness.score))+ 
   geom_point(size= 5, alpha = 0.8) +  
   geom_line()+
-  geom_segment(aes(x = Land, xend= Land, y=0, yend= whr)) +
+  geom_segment(aes(x = name, xend= name, y=0, yend= happiness.score)) +
   scale_color_viridis_c()+ 
   coord_flip() +
   ylim(0, 80) +
   theme_light() + 
   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
-  geom_text(aes(label = whr), size = 3, hjust = -0.5, color = "black") +
+  geom_text(aes(label = happiness.score), size = 3, hjust = -0.5, color = "black")+
   labs(title = "Happiness Score in Europa nach Ländern 2018",
        subtitle = "Lollipop-Diagramm",
        caption = "Quelle: Gapminder",
@@ -75,12 +75,14 @@ ggplot(reisenhappiness, aes(x = fct_reorder(Land, whr), y = whr, color = whr))+
        color = "Happiness 
 Score (%)")
 ```
-Sieh' dir außerdem an, wie sich der Happiness Score der 3 glücklichsten Länder Europas, der 3 unglücklichsten Länder Europas und Deutschland zwischen 2014 und 2020 verändert hat. 
+Hättest du gedacht, dass Finnland das glücklichste Land Europas ist? Wieso sind die Menschen in Finnland glücklicher als wir? Wie du dir bestimmt denken kannst, gibt es viele Faktoren, die dabei eine wichtige Rolle spielen. Wir möchten dir auf unserer Seite einen Grund davon zeigen: $\color{#A8DCEE}{REISEN}$ 
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body-outset"}
+Klicke [$\color{#A8DCEE}{hier!}$](Reisen.html), um deinem Glück näher zu kommen oder scrolle weiter runter, wennn du wissen willst, wie sich der Happiness Score der 3 glücklichsten Länder Europas, der 3 unglücklichsten Länder Europas und Deutschland zwischen 2014 und 2020 verändert hat.
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.align="center"}
 #Bar-Chart-Race
 happyscore %>%  
-    filter(name %in% c("Germany", "Finland", "Denmark", "Switzerland", "Bulgaria", "Greece", "Croatia")) %>% 
+    filter(name %in% c("Germany", "Finland", "Denmark", "Switzerland", "Albania", "Ukraine", "Georgia")) %>% 
   filter (year %in% c("2014", "2015", "2016", "2017", "2018", "2019", "2020"))%>% 
   group_by(year) %>%  
   arrange(year, -happiness.score) %>%
@@ -92,10 +94,11 @@ ggplot(ranked_by_year) +
   aes(x = fct_reorder(name, happiness.score) , y = happiness.score, fill = happiness.score) +
   geom_col(width = 0.6) +
   theme_light() + 
-  theme(panel.grid.major.x = element_blank(), axis.ticks.x = element_blank(), panel.border = element_blank()) +
+  theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
   scale_fill_viridis_c() + 
   scale_y_continuous(name = "Happiness Score (%)",limits = c(0,80)) +
   scale_x_discrete(name = "Land") +
+  coord_flip()+
   gganimate::transition_time(year) +
   labs (title = "Happiness Score im Jahr: {frame_time}",
           subtitle = "Bar Chart Race",
@@ -106,10 +109,10 @@ animate(
   fps = 0.6,
   nframes = 7,
   renderer = gifski_renderer(),
-  height = 250, width = 450
+  height = 450, width = 750
 )
 ```
-Hättest du gedacht, dass Finnland das glücklichste Land Europas ist? Wieso sind die Menschen in Finnland glücklicher als wir? Wie du dir bestimmt denken kannst, gibt es viele Faktoren, die dabei eine wichtige Rolle spielen. Wir möchten dir auf unserer Seite einen Grund davon zeigen: $\color{#A8DCEE}{REISEN}$ 
+Wie du siehst, schwankt der Happiness Score jährlich. Das kann unterschiedliche Gründe haben. Krisen wie die Covid-19-Pandemie können zum Beispiel starke Auswirkungen auf die Lebensstruktur und -qualität der Menschen haben. Dazu zählen Faktoren wie wirtschaftliche Unsicherheit, Angst, Störungen in allen Lebensbereichen, Stress und Herausforderungen für die psychische und physische Gesundheit. Diese Auswirkungen wurden vom Sustainable Development Solutions Network der Vereinten Nationen 2020 untersucht und die Ergebnisse im Jahr 2021 veröffentlicht. Es zeigte sich, dass der Happiness Score insgesamt überraschend stabil geblieben ist. Dennoch gab es auch einige Länder, bei denen ein deutlicher Rückgang des Happiness Scores zu verzeichnen ist. Da die Pandemie noch nicht vorbei ist, wird es weiterhin wichtig sein, den Einfluss von Covid-19 auf den Happiness Score zu untersuchen, um langfristige Auswirkungen feststellen zu können.
+Wenn du mehr über den Happiness Score im Zusammenhang mit der Covid-19-Pandemie erfahren möchtest, klicke [$\color{#A8DCEE}{hier!}$](https://happiness-report.s3.amazonaws.com/2021/WHR+21_Ch2.pdf)
 
-Klicke [$\color{#A8DCEE}{hier!}$](Reisen.html), um deinem Glück näher zu kommen!
-
+Um deinem Glück endlich näher zu kommen, klicke [$\color{#A8DCEE}{hier!}$](Reisen.html)
