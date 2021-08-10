@@ -25,6 +25,8 @@ ggplot(happiness_reisen, aes(y= fct_reorder(Land, reisen.person), x= reisen.pers
         y = "Land",
       title = "Anzahl der Reisen der Länder Europas nach Happiness Score", 
       subtitle = "Streudiagramm",
+      caption = "Quelle: Gapminder.org,
+      de.statista.com",
       color = "Happiness 
 Score (%)")
 ```
@@ -42,10 +44,11 @@ ggplot(reisen_top3_flop3, aes(x= fct_reorder(Land,reisen.person), y= reisen.pers
   theme(panel.border = element_blank()) +
   labs(title = " Anzahl der Reisen pro Person der Top 3 & Flop 3 Länder",
        subtitle = "Streudiagramm",
-       caption = "Quelle: Gapminder",
        x = "Land",
        y = "Durchschnittliche Anzahl der Reisen p.P.
        pro Jahr",
+       caption = "Quelle: Gapminder.org,
+       de.statista.com",
        color = "Happiness 
 Score (%)")
 ```

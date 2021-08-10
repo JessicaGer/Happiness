@@ -47,7 +47,8 @@ map_europe %>%
   theme_void() +
   labs (title = "Lebenszufriedenheit in Europa 2018 (in %)", 
         subtitle = "Interaktive Karte von Europa",
-        fill = "Happiness Score (%)") -> happiness_map
+        fill = "Happiness Score (%)",
+        caption = "Quelle: Gapminder.org") -> happiness_map
 
 ggiraph::girafe(
   ggobj = happiness_map, pointsize = 18, width_svg = 10, height_svg = 10*0.618)
@@ -69,7 +70,7 @@ ggplot(happyscore_EU_2018, aes(x = fct_reorder(name, happiness.score), y = happi
   geom_text(aes(label = happiness.score), size = 3, hjust = -0.5, color = "black")+
   labs(title = "Happiness Score in Europa nach Ländern 2018",
        subtitle = "Lollipop-Diagramm",
-       caption = "Quelle: Gapminder",
+       caption = "Quelle: Gapminder.org",
        x = "Land",
        y = "Happiness Score (%)",
        color = "Happiness 
@@ -102,7 +103,8 @@ ggplot(ranked_by_year) +
   gganimate::transition_time(year) +
   labs (title = "Happiness Score im Jahr: {frame_time}",
           subtitle = "Bar Chart Race",
-         fill = "Happiness 
+          caption = "Quelle: Gapminder.org",
+          fill = "Happiness 
 Score (%)") -> anim
 animate(
   anim,
