@@ -15,7 +15,7 @@ navbar:
     - text: "Reisen macht gluecklich"
       href: Reisen.html
     - text: "Top 3"
-      href: Top3.html
+      href:
       menu:
         - text: "Finnland"
           href: Finland.html
@@ -24,7 +24,7 @@ navbar:
         - text: "Schweiz"
           href: Switzerland.html
     - text: "Flop 3"
-      href: Flop3.html
+      href:
       menu:
         - text: "Griechenland"
           href: Greece.html
@@ -32,14 +32,8 @@ navbar:
           href: Bulgaria.html
         - text: "Rumaenien"
           href: Rumaenien.html
-    - text: "Tipps"
-      href: 
     - text: "Ueber uns"
       href: about.html
-    - icon: fab fa-instagram
-      href: 
-    - icon: fab fa-facebook
-      href:
 output: 
   distill::distill_article:
     toc: true

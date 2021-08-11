@@ -35,11 +35,12 @@ ggplot(happ, aes(y = happiness.score, x = year, color = name))+
 ```
 Finde jetzt heraus, ob sich Deutschland für dich als Reiseland eignet. Im Durchschnitt reist jeder Deutsche im Jahr 3,2 Mal, wobei sich Deutschland auf Platz ***$\color{#71CA5B}{12}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Deutschland ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
 
-### $\color{#71CA5B}{Bildergalerie}$ ####
-Berlin - Die Hauptstadt von Deutschland
-<center>![Berlin](https://static.wixstatic.com/media/dae877_cac3c7f145ea484e95fb4a66e7efdcf8~mv2.jpg/v1/fill/w_640,h_516,al_c,q_80,usm_0.66_1.00_0.01/dae877_cac3c7f145ea484e95fb4a66e7efdcf8~mv2.webp){height="400px" width="200px"}</center>
-
 ### Was zeichnet Deutschland aus? ####
+
+<center>![Berlin](https://static.wixstatic.com/media/dae877_cac3c7f145ea484e95fb4a66e7efdcf8~mv2.jpg/v1/fill/w_640,h_516,al_c,q_80,usm_0.66_1.00_0.01/dae877_cac3c7f145ea484e95fb4a66e7efdcf8~mv2.webp){height=400px" width="400px"}</center>
+
+<center>Berlin - Die Hauptstadt von Deutschland</center>
+
 Deutschland ist landschaftlich divers - und genau so vielfältig sind auch die möglichen Urlaubsziele. Von den Alpen, über grüne Wälder, sanfte Mittelgebirge und Flusslandschaften bis hin zur Küstenregion reicht die Auswahl. Reisen in Deutschland lohnt sich also auch!
 
 ### Wie ist das Klima in Deutschland? ####
@@ -57,9 +58,9 @@ ggplot() + geom_line(data=df1, aes(x=Monat, y=value, color=Temperature, group=Te
     sec.axis = sec_axis( trans=~.*1, name="Durchschnittliche tägliche Sonnenstunden (Std.)")
   ) +
   theme_light() + 
-  labs(title = "Durchschnittliche tägliche Temperatur und Sonnenstunden in Deutschland (Berlin)",
+  labs(title = "Durchschnittliche tägliche Temperatur und Sonnenstunden in Deutschland in Berlin",
        subtitle = "Klima-Diagramm",
-       caption = "Quelle: Climate-Data.org" ) +
+       caption = "Quelle: Climate-Data.org") +
   theme(
       axis.title.y = element_text(color ="black"),
       axis.title.y.right = element_text(color ="orange")) +  
@@ -87,7 +88,7 @@ klima_DE2 %>%
         plot.title = element_text(hjust = 0.5))
 ```
 
-### Wie hoch sind die Reiseausgaben für Übernachtungen in Deutschland im Vergleich zu anderen Ländern Europas? ####
+### Wie hoch sind die Reiseausgaben für Übernachtungen in Deutschland? ####
 
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
 
@@ -101,8 +102,8 @@ ggplot(tourismus_col, aes(x = fct_reorder(Land, expenditure), y = expenditure))+
   coord_flip() +
   theme_light() +
   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank(), legend.position = "none") +
-  geom_text(aes(label = expenditure), size = 3, hjust = -1.2, color = "black")+
-  scale_y_continuous(breaks = c(0,30, 60, 90, 120, 140)) +
+  geom_text(aes(label = expenditure), size = 3, hjust = -0.8, color = "black")+
+  scale_y_continuous(breaks = c(0,30, 60, 90, 120)) +
   labs(title = "Durchschnittliche Reiseausgaben pro Übernachtung in den Ländern Europas",
        subtitle = "Lollipop-Diagramm",
        caption = "Quelle: ec.europa.eu",
