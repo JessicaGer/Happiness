@@ -1,0 +1,120 @@
+---
+title: "Schweden"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(ggplot2)
+library(tidyverse)
+
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+klima_S1 <- read.csv2("./datasets/klima/klima_S1.csv")
+klima_S2 <- read.csv2("./datasets/klima/klima_S2.csv")
+tourismus <- read.csv2("./datasets/tourismus.csv")
+
+
+
+```
+
+$\color{#9FD749}{Schweden}$ ist auf Platz ***$\color{#9FD749}{7}$*** der glücklichsten Länder mit einem Happiness Score von 73,75 %. In der folgenden Grafik siehst du, wie sich der Happiness Score in den letzten Jahren verändert hat.
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.align="center"}
+happ <- filter(happyscore, name %in% c("Sweden"))
+ggplot(happ, aes(y = happiness.score, x = year, color = name))+
+   geom_line() +
+   theme_light() +
+   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
+   scale_color_manual(values=c('#9FD749'))+
+  xlim(2005,2020) +
+      labs (title = "Happiness Score zwischen 2005 und 2020",
+          subtitle = "Liniendiagramm",
+          x= "Jahr",
+          y = "Happiness Score (%)",
+          caption = "Quelle: Gapminder.org",
+          color = "Land")
+```
+Finde jetzt heraus, ob sich Schweden für dich als Reiseland eignet. Im Durchschnitt reist jeder Schwede im Jahr 5,32 Mal, wobei sich Schweden auf Platz ***$\color{#9FD749}{2}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Schweden ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
+
+### Was zeichnet Schweden aus? ####
+
+<center>![Schweden](https://www.ab-in-den-urlaub.de/magazin/wp-content/uploads/2020/03/1583501813_Blick-auf-die-Altstadt-Gamla-Stan.jpg){height=400px" width="400px"}</center>
+
+<center>Stockholm - Die Hauptstadt von Schweden</center>
+
+Geprägt von wunderschönen Landschaften ist Schweden ein perfektes Land zum Abschalten, Erholen und um sich selbst zu finden. Aber auch tausende Inseln, spannende Städte und natürlich die Polarlichter ziehen Reisende immer wieder aufs Neue in ihren Bann.
+
+### Wie ist das Klima in Schweden? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Klima Schweden Stockholm(Temperatur und Sonnenstunden)
+
+klima_S1$Monat <- factor(klima_S1$Monat, levels =klima_S1$Monat)
+df1 <- klima_S1 %>% select(-Sonnenstd) %>% gather(key=Temperature, value=value, -Monat)
+ggplot() + geom_line(data=df1, aes(x=Monat, y=value, color=Temperature, group=Temperature), size = 1.2) +
+   scale_color_brewer(palette="Dark2")+
+  geom_bar(klima_S1, mapping = aes(x=Monat, y=Sonnenstd), stat="identity", alpha=0.5, fill = "orange") +
+  scale_y_continuous(
+    name = "Temperatur (°C)",
+    sec.axis = sec_axis( trans=~.*1, name="Durchschnittliche tägliche Sonnenstunden (Std.)")
+  ) +
+  theme_light() + 
+  labs(title = "Durchschnittliche tägliche Temperatur und Sonnenstunden in Stockholm",
+       subtitle = "Klima-Diagramm",
+       caption = "Quelle: Climate-Data.org",
+       color = "Temperatur") +
+  theme(
+      axis.title.y = element_text(color ="black"),
+      axis.title.y.right = element_text(color ="orange")) +  
+  theme(legend.position = "bottom")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Regentage und Niederschlag in Stockholm
+klima_S2$Monat <- fct_inorder(klima_S2$Monat)
+klima_S2 %>% 
+  gather(Niederschlag,Regentage, key = "var", value = "value") %>%
+  ggplot(aes(x = Monat, y = value, col = var)) + 
+ geom_point(size = 4, alpha = 0.6) +  
+  scale_y_continuous(
+    name = "Niederschlag (mm)",
+    sec.axis = sec_axis( trans=~.*1, name="Regentage (Tg.)")) +
+  scale_color_discrete(labels = c("Niederschlag", "Regentage")) +
+  theme_light() + 
+  labs(title = "Niederschlag und Regentage pro Monat in Stockholm", 
+       caption ="Quelle: Climate-Data.org",
+       x = "Monat",
+       subtitle = "Klima-Diagramm") + 
+  geom_text(aes(label = value), size = 3, vjust = -1.1, color = "black") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+```
+
+### Wie hoch sind die Reiseausgaben für Übernachtungen in Schweden? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+
+tourismus_col <- tourismus %>% 
+mutate(mycolor = ifelse(Land == "Schweden",'#9FD749', '#BFBFBF'))
+
+ggplot(tourismus_col, aes(x = fct_reorder(Land, expenditure), y = expenditure))+
+  geom_line()+
+  geom_segment(aes(x = Land, xend= Land, y=0, yend= expenditure), color = tourismus_col$mycolor, size = 2) +
+  geom_point(size= 4, alpha = 0.8, color = tourismus_col$mycolor) + 
+  coord_flip() +
+  theme_light() +
+  theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank(), legend.position = "none") +
+  geom_text(aes(label = expenditure), size = 3, hjust = -0.8, color = "black")+
+  scale_y_continuous(breaks = c(0,30, 60, 90, 120)) +
+  labs(title = "Durchschnittliche Reiseausgaben pro Übernachtung in den Ländern Europas",
+       subtitle = "Lollipop-Diagramm",
+       caption = "Quelle: ec.europa.eu",
+       x = "Land",
+       y = "Reiseausgaben pro Übernachtung (€)")
+
+```
+
+### $\color{#9FD749}{Werde}$ $\color{#9FD749}{glücklicher!}$ ####
+Buche hier deine Reise und werde glücklicher!! [Booking.com](https://www.booking.com/country/se.de.html?aid=1686417;label=yourtour;sid=22dd0bb69f172fd94b3a90773f8f0f59;breadcrumb=searchresults_irene;srpvid=5eb270f0b6e500c0&)
+
+Oder suche auf der Map weiter nach einem anderen Reiseziel [Zurück zur Europakarte](Happiness.html)

@@ -3,17 +3,117 @@ title: "Bulgarien"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
-land <- "Bulgarien"
-```
-
-
+library(ggplot2)
+library(tidyverse)
 
 happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
-happyscore_DE <- filter(happyscore, name == "Bulgaria")
+klima_BU1 <- read.csv2("./datasets/klima/klima_BU1.csv")
+klima_BU2 <- read.csv2("./datasets/klima/klima_BU2.csv")
+tourismus <- read.csv2("./datasets/tourismus.csv")
 
-#Liniendiagramm: Happiness Score Bulgarien von 2007-2020
-ggplot(happyscore_BULG) +
-  aes(x = year, y = happiness.score) +
-  geom_line()
+```
+
+$\color{#453377}{Bulgarien}$ ist auf Platz ***$\color{#453377}{37}$*** der glücklichsten Länder mit einem Happiness Score von 50,99 %. In der folgenden Grafik siehst du, wie sich der Happiness Score in den letzten Jahren verändert hat.
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.align="center"}
+happ <- filter(happyscore, name %in% c("Bulgaria"))
+ggplot(happ, aes(y = happiness.score, x = year, color = name))+
+   geom_line() +
+   theme_light() +
+   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
+   scale_color_manual(values=c('#453377'))+
+  xlim(2005,2020) +
+      labs (title = "Happiness Score zwischen 2007 und 2020",
+          subtitle = "Liniendiagramm",
+          x= "Jahr",
+          y = "Happiness Score (%)",
+          caption = "Quelle: Gapminder.org",
+          color = "Land")
+```
+Finde jetzt heraus, ob sich Bulgarien für dich als Reiseland eignet. Im Durchschnitt reist jeder Bulgare im Jahr 0,72 Mal, wobei sich Bulgarien auf Platz ***$\color{#453377}{31}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Bulgarien ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
+
+### Was zeichnet Bulgarien aus? ####
+
+<center>![Bulgarien](https://www.ab-in-den-urlaub.de/magazin/wp-content/uploads/2019/11/1573472558_Luftaufnahme-Sofia.jpg){height=400px" width="400px"}</center>
+
+<center>Sofia - Die Hauptstadt von Bulgarien</center>
+
+
+Bulgarien ist ein bei Badeurlaubern, Wintersportlern und Aktivurlaubern gleichermaßen beliebtes Reiseziel in Südosteuropa. Die 400 Kilometer lange Schwarzmeerküste begeistert mit flach abfallenden weißen Sandstränden, modernen Hotelanlagen, Sportmöglichkeiten wie Wasserski, Windsurfen und Segeln sowie antiken Ruinen. Ca. 500 Kilometer weiter westlich liegt die Hauptstadt Sofia, das wirtschaftliche und politische Herz Bulgariens.
+
+### Wie ist das Klima in Bulgarien? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Klima Bulgarien Sofia(Temperatur und Sonnenstunden)
+
+klima_BU1$Monat <- factor(klima_BU1$Monat, levels =klima_BU1$Monat)
+df1 <- klima_BU1 %>% select(-Sonnenstd) %>% gather(key=Temperature, value=value, -Monat)
+ggplot() + geom_line(data=df1, aes(x=Monat, y=value, color=Temperature, group=Temperature), size = 1.2) +
+   scale_color_brewer(palette="Dark2")+
+  geom_bar(klima_BU1, mapping = aes(x=Monat, y=Sonnenstd), stat="identity", alpha=0.5, fill = "orange") +
+  scale_y_continuous(
+    name = "Temperatur (°C)",
+    sec.axis = sec_axis( trans=~.*1, name="Durchschnittliche tägliche Sonnenstunden (Std.)")
+  ) +
+  theme_light() + 
+  labs(title = "Durchschnittliche tägliche Temperatur und Sonnenstunden in Sofia",
+       subtitle = "Klima-Diagramm",
+       caption = "Quelle: Climate-Data.org",
+       color = "Temperatur") +
+  theme(
+      axis.title.y = element_text(color ="black"),
+      axis.title.y.right = element_text(color ="orange")) +  
+  theme(legend.position = "bottom")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Regentage und Niederschlag in Sofia
+klima_BU2$Monat <- fct_inorder(klima_BU2$Monat)
+klima_BU2 %>% 
+  gather(Niederschlag,Regentage, key = "var", value = "value") %>%
+  ggplot(aes(x = Monat, y = value, col = var)) + 
+ geom_point(size = 4, alpha = 0.6) +  
+  scale_y_continuous(
+    name = "Niederschlag (mm)",
+    sec.axis = sec_axis( trans=~.*1, name="Regentage (Tg.)")) +
+  scale_color_discrete(labels = c("Niederschlag", "Regentage")) +
+  theme_light() + 
+  labs(title = "Niederschlag und Regentage pro Monat in Sofia", 
+       caption ="Quelle: Climate-Data.org",
+       x = "Monat",
+       subtitle = "Klima-Diagramm") + 
+  geom_text(aes(label = value), size = 3, vjust = -1.1, color = "black") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+```
+
+### Wie hoch sind die Reiseausgaben für Übernachtungen in Bulgarien? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+
+tourismus_col <- tourismus %>% 
+mutate(mycolor = ifelse(Land == "Bulgarien",'#453377', '#BFBFBF'))
+
+ggplot(tourismus_col, aes(x = fct_reorder(Land, expenditure), y = expenditure))+
+  geom_line()+
+  geom_segment(aes(x = Land, xend= Land, y=0, yend= expenditure), color = tourismus_col$mycolor, size = 2) +
+  geom_point(size= 4, alpha = 0.8, color = tourismus_col$mycolor) + 
+  coord_flip() +
+  theme_light() +
+  theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank(), legend.position = "none") +
+  geom_text(aes(label = expenditure), size = 3, hjust = -0.8, color = "black")+
+  scale_y_continuous(breaks = c(0,30, 60, 90, 120)) +
+  labs(title = "Durchschnittliche Reiseausgaben pro Übernachtung in den Ländern Europas",
+       subtitle = "Lollipop-Diagramm",
+       caption = "Quelle: ec.europa.eu",
+       x = "Land",
+       y = "Reiseausgaben pro Übernachtung (€)")
+
+```
+
+### $\color{#453377}{Werde}$ $\color{#453377}{glücklicher!}$ ####
+Buche hier deine Reise und werde glücklicher!! [Booking.com](https://www.booking.com/country/bg.de.html?aid=1784973;label=affnetawin-index_pub-101248_site-_pname-adgoal%20GmbH%20-%20Content_plc-_ts-at108335_a127447_m14_p143942_t125612_cDE_f608946_clkid-18120_1628961418_1080a5a27828c7d62fd2519c12e23ca1;sid=22dd0bb69f172fd94b3a90773f8f0f59;breadcrumb=searchresults_irene;srpvid=220f798883c4001c&)
+
+Oder suche auf der Map weiter nach einem anderen Reiseziel [Zurück zur Europakarte](Happiness.html)

@@ -1,0 +1,119 @@
+---
+title: "Rumänien"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(ggplot2)
+library(tidyverse)
+
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+klima_RU1 <- read.csv2("./datasets/klima/klima_RU1.csv")
+klima_RU2 <- read.csv2("./datasets/klima/klima_RU2.csv")
+tourismus <- read.csv2("./datasets/tourismus.csv")
+
+```
+
+$\color{#2C888B}{Rumänien}$ ist auf Platz ***$\color{#2C888B}{21}$*** der glücklichsten Länder mit einem Happiness Score von 61,51 %. In der folgenden Grafik siehst du, wie sich der Happiness Score in den letzten Jahren verändert hat.
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.align="center"}
+happ <- filter(happyscore, name %in% c("Romania"))
+ggplot(happ, aes(y = happiness.score, x = year, color = name))+
+   geom_line() +
+   theme_light() +
+   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
+   scale_color_manual(values=c('#2C888B'))+
+  xlim(2005,2020) +
+      labs (title = "Happiness Score zwischen 2005 und 2020",
+          subtitle = "Liniendiagramm",
+          x= "Jahr",
+          y = "Happiness Score (%)",
+          caption = "Quelle: Gapminder.org",
+          color = "Land")
+```
+Finde jetzt heraus, ob sich Rumänien für dich als Reiseland eignet. Im Durchschnitt reist jeder Rumäne im Jahr 0,94 Mal, wobei sich Rumänien auf Platz ***$\color{#2C888B}{30}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Rumänien ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
+
+### Was zeichnet Rumänien aus? ####
+
+<center>![Rumänien](https://cdn0.scrvt.com/airportdtm/c05ad66cd07ec47a/4344eb61199f/AerialviewoftheUniversitySquareintheciviccenterofBucharestRomaniaDaytimewithtraffic.jpg){height=400px" width="400px"}</center>
+
+<center>Bukarest - Die Hauptstadt von Rumänien</center>
+
+
+Rumänien ist für viele Urlauber noch ein Geheimtipp, obwohl das südosteuropäische Land nur wenige Flugstunden von Deutschland entfernt liegt. Von der pulsierenden Metropole Bukarest, über wunderschöne Landschaften mit unzähligen Schlössern und Burgen, bis hin zu traumhaften Stränden. Rumänien bietet viel mehr als man auf dem Schirm hat!
+
+### Wie ist das Klima in Rumänien? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Klima Rumänien Bukarest(Temperatur und Sonnenstunden)
+
+klima_RU1$Monat <- factor(klima_RU1$Monat, levels =klima_RU1$Monat)
+df1 <- klima_RU1 %>% select(-Sonnenstd) %>% gather(key=Temperature, value=value, -Monat)
+ggplot() + geom_line(data=df1, aes(x=Monat, y=value, color=Temperature, group=Temperature), size = 1.2) +
+   scale_color_brewer(palette="Dark2")+
+  geom_bar(klima_RU1, mapping = aes(x=Monat, y=Sonnenstd), stat="identity", alpha=0.5, fill = "orange") +
+  scale_y_continuous(
+    name = "Temperatur (°C)",
+    sec.axis = sec_axis( trans=~.*1, name="Durchschnittliche tägliche Sonnenstunden (Std.)")
+  ) +
+  theme_light() + 
+  labs(title = "Durchschnittliche tägliche Temperatur und Sonnenstunden in Bukarest",
+       subtitle = "Klima-Diagramm",
+       caption = "Quelle: Climate-Data.org",
+       color = "Temperatur") +
+  theme(
+      axis.title.y = element_text(color ="black"),
+      axis.title.y.right = element_text(color ="orange")) +  
+  theme(legend.position = "bottom")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Regentage und Niederschlag in Bukarest
+klima_RU2$Monat <- fct_inorder(klima_RU2$Monat)
+klima_RU2 %>% 
+  gather(Niederschlag,Regentage, key = "var", value = "value") %>%
+  ggplot(aes(x = Monat, y = value, col = var)) + 
+ geom_point(size = 4, alpha = 0.6) +  
+  scale_y_continuous(
+    name = "Niederschlag (mm)",
+    sec.axis = sec_axis( trans=~.*1, name="Regentage (Tg.)")) +
+  scale_color_discrete(labels = c("Niederschlag", "Regentage")) +
+  theme_light() + 
+  labs(title = "Niederschlag und Regentage pro Monat in Bukarest", 
+       caption ="Quelle: Climate-Data.org",
+       x = "Monat",
+       subtitle = "Klima-Diagramm") + 
+  geom_text(aes(label = value), size = 3, vjust = -1.1, color = "black") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+```
+
+### Wie hoch sind die Reiseausgaben für Übernachtungen in Rumänien? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+
+tourismus_col <- tourismus %>% 
+mutate(mycolor = ifelse(Land == "Rumänien",'#2C888B', '#BFBFBF'))
+
+ggplot(tourismus_col, aes(x = fct_reorder(Land, expenditure), y = expenditure))+
+  geom_line()+
+  geom_segment(aes(x = Land, xend= Land, y=0, yend= expenditure), color = tourismus_col$mycolor, size = 2) +
+  geom_point(size= 4, alpha = 0.8, color = tourismus_col$mycolor) + 
+  coord_flip() +
+  theme_light() +
+  theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank(), legend.position = "none") +
+  geom_text(aes(label = expenditure), size = 3, hjust = -0.8, color = "black")+
+  scale_y_continuous(breaks = c(0,30, 60, 90, 120)) +
+  labs(title = "Durchschnittliche Reiseausgaben pro Übernachtung in den Ländern Europas",
+       subtitle = "Lollipop-Diagramm",
+       caption = "Quelle: ec.europa.eu",
+       x = "Land",
+       y = "Reiseausgaben pro Übernachtung (€)")
+
+```
+
+### $\color{#2C888B}{Werde}$ $\color{#2C888B}{glücklicher!}$ ####
+Buche hier deine Reise und werde glücklicher!! [Booking.com](https://www.booking.com/country/ro.de.html?aid=1784973;label=affnetawin-index_pub-101248_site-_pname-adgoal%20GmbH%20-%20Content_plc-_ts-at108335_a127447_m14_p143942_t125612_cDE_f608946_clkid-18120_1628961742_09c4b96e7be116df06e74b3c90639c0f;sid=22dd0bb69f172fd94b3a90773f8f0f59;breadcrumb=searchresults_irene;srpvid=f8347a2a4a9200b0&)
+
+Oder suche auf der Map weiter nach einem anderen Reiseziel [Zurück zur Europakarte](Happiness.html)

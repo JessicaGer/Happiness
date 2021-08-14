@@ -3,9 +3,119 @@ title: "Finnland"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
-land <- "Finnland"
+library(ggplot2)
+library(tidyverse)
+
+happyscore <- read.csv2("./datasets/Happiness_Score_Countries.csv")
+klima_FIN1 <- read.csv2("./datasets/klima/klima_FIN1.csv")
+klima_FIN2 <- read.csv2("./datasets/klima/klima_FIN2.csv")
+tourismus <- read.csv2("./datasets/tourismus.csv")
+
+
+
 ```
 
+$\color{#FDE725}{Finnland}$ ist auf Platz ***$\color{#FDE725}{1}$*** der glücklichsten Länder mit einem Happiness Score von 78,58 %. In der folgenden Grafik siehst du, wie sich der Happiness Score in den letzten Jahren verändert hat.
 
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.align="center"}
+happ <- filter(happyscore, name %in% c("Finland"))
+ggplot(happ, aes(y = happiness.score, x = year, color = name))+
+   geom_line() +
+   theme_light() +
+   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
+   scale_color_manual(values=c('#FDE725'))+
+  xlim(2005,2020) +
+      labs (title = "Happiness Score zwischen 2006 und 2020",
+          subtitle = "Liniendiagramm",
+          x= "Jahr",
+          y = "Happiness Score (%)",
+          caption = "Quelle: Gapminder.org",
+          color = "Land")
+```
+Finde jetzt heraus, ob sich Finnland für dich als Reiseland eignet. Im Durchschnitt reist jeder Finne im Jahr 6,99 Mal, wobei sich Finnland auf Platz ***$\color{#FDE725}{1}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Finnland ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
+
+### Was zeichnet Finnland aus? ####
+
+<center>![Finnland](https://www.urlaubstracker.de/wp-content/uploads/2020/02/finnland-helsinki-altstadt-900x600.jpg){height=400px" width="400px"}</center>
+
+<center>Helsinki - Die Hauptstadt von Finnland</center>
+
+
+In Finnland steht die Natur im Vordergrund: Flache Landschaften, Seen, Fjorde und Berge sorgen für ein faszinierendes Naturschauspiel. Gastfreundschaft, heiße Quellen und Gletscher machen das Land zu einem beliebten Reiseziel.
+
+### Wie ist das Klima in Finnland? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Klima Finnland Helsiki(Temperatur und Sonnenstunden)
+
+klima_FIN1$Monat <- factor(klima_FIN1$Monat, levels =klima_FIN1$Monat)
+df1 <- klima_FIN1 %>% select(-Sonnenstd) %>% gather(key=Temperature, value=value, -Monat)
+ggplot() + geom_line(data=df1, aes(x=Monat, y=value, color=Temperature, group=Temperature), size = 1.2) +
+   scale_color_brewer(palette="Dark2")+
+  geom_bar(klima_FIN1, mapping = aes(x=Monat, y=Sonnenstd), stat="identity", alpha=0.5, fill = "orange") +
+  scale_y_continuous(
+    name = "Temperatur (°C)",
+    sec.axis = sec_axis( trans=~.*1, name="Durchschnittliche tägliche Sonnenstunden (Std.)")
+  ) +
+  theme_light() + 
+  labs(title = "Durchschnittliche tägliche Temperatur und Sonnenstunden in Helsinki",
+       subtitle = "Klima-Diagramm",
+       caption = "Quelle: Climate-Data.org",
+       color = "Temperatur") +
+  theme(
+      axis.title.y = element_text(color ="black"),
+      axis.title.y.right = element_text(color ="orange")) +  
+  theme(legend.position = "bottom")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+# Regentage und Niederschlag in Helsinki
+klima_FIN2$Monat <- fct_inorder(klima_FIN2$Monat)
+klima_FIN2 %>% 
+  gather(Niederschlag,Regentage, key = "var", value = "value") %>%
+  ggplot(aes(x = Monat, y = value, col = var)) + 
+ geom_point(size = 4, alpha = 0.6) +  
+  scale_y_continuous(
+    name = "Niederschlag (mm)",
+    sec.axis = sec_axis( trans=~.*1, name="Regentage (Tg.)")) +
+  scale_color_discrete(labels = c("Niederschlag", "Regentage")) +
+  theme_light() + 
+  labs(title = "Niederschlag und Regentage pro Monat in Helsinki", 
+       caption ="Quelle: Climate-Data.org",
+       x = "Monat",
+       subtitle = "Klima-Diagramm") + 
+  geom_text(aes(label = value), size = 3, vjust = -1.1, color = "black") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+```
+
+### Wie hoch sind die Reiseausgaben für Übernachtungen in Finnland? ####
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, layout="l-body", fig.width=10, fig.height=6, fig.align="center"}
+
+tourismus_col <- tourismus %>% 
+mutate(mycolor = ifelse(Land == "Finnland",'#FDE725', '#BFBFBF'))
+
+ggplot(tourismus_col, aes(x = fct_reorder(Land, expenditure), y = expenditure))+
+  geom_line()+
+  geom_segment(aes(x = Land, xend= Land, y=0, yend= expenditure), color = tourismus_col$mycolor, size = 2) +
+  geom_point(size= 4, alpha = 0.8, color = tourismus_col$mycolor) + 
+  coord_flip() +
+  theme_light() +
+  theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank(), legend.position = "none") +
+  geom_text(aes(label = expenditure), size = 3, hjust = -0.8, color = "black")+
+  scale_y_continuous(breaks = c(0,30, 60, 90, 120)) +
+  labs(title = "Durchschnittliche Reiseausgaben pro Übernachtung in den Ländern Europas",
+       subtitle = "Lollipop-Diagramm",
+       caption = "Quelle: ec.europa.eu",
+       x = "Land",
+       y = "Reiseausgaben pro Übernachtung (€)")
+
+```
+
+### $\color{#FDE725}{Werde}$ $\color{#FDE725}{glücklicher!}$ ####
+Buche hier deine Reise und werde glücklicher!! [Booking.com](https://www.booking.com/country/fi.de.html?aid=1603077;label=journey;sid=22dd0bb69f172fd94b3a90773f8f0f59;breadcrumb=searchresults_irene;srpvid=75265b44664200ed&)
+
+Oder suche auf der Map weiter nach einem anderen Reiseziel [Zurück zur Europakarte](Happiness.html)

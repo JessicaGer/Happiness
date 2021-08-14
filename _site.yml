@@ -19,9 +19,9 @@ navbar:
       menu:
         - text: "Finnland"
           href: Finland.html
-        - text: "Daenemark"
+        - text: "Schweden"
           href: Denmark.html
-        - text: "Schweiz"
+        - text: "Norwegen"
           href: Switzerland.html
     - text: "Flop 3"
       href:
