@@ -23,7 +23,7 @@ ggplot(happiness_reisen, aes(y= fct_reorder(Land, reisen.person), x= reisen.pers
   theme(panel.border = element_blank()) +
   labs (x = "Durchschnittliche Anzahl der Reisen p.P. pro Jahr",
         y = "Land",
-      title = "Anzahl der Reisen der Länder Europas nach Happiness Score", 
+      title = "Anzahl der Reisen der Länder Europas nach Happiness Score (2018)", 
       subtitle = "Streudiagramm",
       caption = "Quelle: Gapminder.org,
       de.statista.com",
@@ -42,7 +42,7 @@ ggplot(reisen_top3_flop3, aes(x= fct_reorder(Land,reisen.person), y= reisen.pers
   geom_text(aes(label = reisen.person), size=3, hjust = -0.3, color = "black") + 
   theme_light() + 
   theme(panel.border = element_blank()) +
-  labs(title = "Anzahl der Reisen pro Person der Top 3 & Flop 3 Länder",
+  labs(title = "Anzahl der Reisen pro Person der Top 3 & Flop 3 Länder (2018)",
        subtitle = "Streudiagramm",
        x = "Land",
        y = "Durchschnittliche Anzahl der Reisen p.P.

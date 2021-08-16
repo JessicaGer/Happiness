@@ -45,7 +45,7 @@ map_europe %>%
                           onclick = jscode)) +
   scale_fill_viridis_c() +
   theme_void() +
-  labs (title = "Lebenszufriedenheit in Europa 2018 (in %)", 
+  labs (title = "Lebenszufriedenheit in Europa (2018)", 
         subtitle = "Interaktive Karte von Europa",
         fill = "Happiness Score (%)",
         caption = "Quelle: Gapminder.org") -> happiness_map
@@ -68,7 +68,7 @@ ggplot(happyscore_EU_2018, aes(x = fct_reorder(name, happiness.score), y = happi
   theme_light() + 
   theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
   geom_text(aes(label = happiness.score), size = 3, hjust = -0.5, color = "black")+
-  labs(title = "Happiness Score in Europa nach Ländern 2018",
+  labs(title = "Happiness Score in Europa nach Ländern (2018)",
        subtitle = "Lollipop-Diagramm",
        caption = "Quelle: Gapminder.org",
        x = "Land",

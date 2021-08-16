@@ -20,9 +20,9 @@ navbar:
         - text: "Finnland"
           href: Finland.html
         - text: "Schweden"
-          href: Denmark.html
+          href: Sweden.html
         - text: "Norwegen"
-          href: Switzerland.html
+          href: Norway.html
     - text: "Flop 3"
       href:
       menu:
@@ -31,7 +31,7 @@ navbar:
         - text: "Bulgarien"
           href: Bulgaria.html
         - text: "Rumaenien"
-          href: Rumaenien.html
+          href: Romania.html
     - text: "Ueber uns"
       href: about.html
 output: 

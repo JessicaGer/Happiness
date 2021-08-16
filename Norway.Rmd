@@ -34,7 +34,7 @@ ggplot(happ, aes(y = happiness.score, x = year, color = name))+
           caption = "Quelle: Gapminder.org",
           color = "Land")
 ```
-Finde jetzt heraus, ob sich Norwegen für dich als Reiseland eignet. Im Durchschnitt reist jeder Norwege im Jahr 5,11 Mal, wobei sich Norwegen auf Platz ***$\color{#ADDA45}{2}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Schweden ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
+Finde jetzt heraus, ob sich Norwegen für dich als Reiseland eignet. Im Durchschnitt reist jeder Norwege im Jahr 5,11 Mal, wobei sich Norwegen auf Platz ***$\color{#ADDA45}{3}$*** der häufigsten Reisen befindet. Auf dieser Seite zeigen wir dir, wie das Klima im Durchschnitt in Schweden ist und wie hoch die Reiseausgaben pro Übernachtung im Vergleich zu den anderen Ländern Europas sind.  
 
 ### Was zeichnet Norwegen aus? ####
 

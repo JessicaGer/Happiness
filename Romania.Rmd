@@ -25,7 +25,7 @@ ggplot(happ, aes(y = happiness.score, x = year, color = name))+
    theme(panel.grid.major.y = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank()) +
    scale_color_manual(values=c('#2C888B'))+
   xlim(2005,2020) +
-      labs (title = "Happiness Score zwischen 2005 und 2020",
+      labs (title = "Happiness Score zwischen 2005 und 2019",
           subtitle = "Liniendiagramm",
           x= "Jahr",
           y = "Happiness Score (%)",
